@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Bidang Dashboard</title>
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans pb-10">
+
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        
+        <!-- Dropdown Pemilih Bidang Dashboard -->
+        <div class="mb-8 max-w-xs mx-auto text-center">
+            <label for="bidang-selector" class="block text-sm font-medium text-gray-700 mb-2">Pilih Bidang Dashboard:</label>
+            <select id="bidang-selector" class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer">
+                <option value="keuangan">Keuangan</option>
+                <option value="akademik">Akademik</option>
+                <option value="kerjasama">Kerjasama</option>
+                <option value="sdm">SDM</option>
+            </select>
+        </div>
+
+        <!-- Judul Group Dinamis dari Cell E2 -->
+        <h1 id="group-title" class="text-2xl font-bold text-gray-800 mb-6 text-center uppercase tracking-wide">
+            Memuat Data...
+        </h1>
+
+        <!-- Container Grid untuk Menampung Card Indikator/Kategori -->
+        <div id="card-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Card data terpopulasi otomatis di sini -->
+        </div>
+    </div>
+
+    <script>
+        // ========================================================
+        // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT (GAS) ANDA DI SINI
+        // ========================================================
+        const GAS_API_URL = "PASANG_URL_WEB_APP_GAS_DI_SINI"; 
+
+        /**
+         * Fungsi helper untuk memformat angka secara dinamis.
+         * Otomatis menggunakan format Rupiah (IDR) jika angka bernilai besar (> 100.000)
+         * yang biasanya mengindikasikan nominal mata uang/anggaran keuangan.
+         */
+        function formatNumber(value) {
+            if (typeof value === 'number') {
+                if (value > 100000) {
+                    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+                }
+                return new Intl.NumberFormat('id-ID').format(value);
+            }
+            return value;
+        }
+
+        /**
+         * Fungsi helper untuk memformat persentase dari Google Sheets decimal (cth: 0.1916 menjadi 19.16%)
+         */
+        function formatPercent(value) {
+            return typeof value === 'number' ? (value * 100).toFixed(2) + '%' : value;
+        }
+
+        /**
+         * Fungsi utama untuk mengambil data dari backend GAS berdasarkan bidang terpilih
+         */
+        async function fetchDashboardData(namaBidang) {
+            const container = document.getElementById('card-container');
+            const titleEl = document.getElementById('group-title');
+            
+            // Set status loading awal
+            titleEl.innerText = "Memuat Data...";
+            container.innerHTML = ""; 
+
+            try {
+                // Mengirimkan request dengan parameter query string ?bidang=keuangan/akademik/dll.
+                const response = await fetch(`${GAS_API_URL}?bidang=${namaBidang}`);
+                const data = await response.json();
+
+                // Cek jika ada return error dari backend script
+                if (data.error) {
+                    titleEl.innerText = "Error: " + data.error;
+                    return;
+                }
+
+                // Menampilkan Judul Group Bidang dari Cell E2
+                titleEl.innerText = data.groupTitle;
+
+                // 1. Loop dan Render Data Item Utama (Baris 4 sampai 7 di Sheet)
+                data.items.forEach(item => {
+                    const card = `
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-6 hover:shadow-lg transition">
+                            <h2 class="text-lg font-bold text-blue-900 border-b border-gray-100 pb-2 mb-4">${item.kategori}</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Kolom Realisasi (Menggunakan Sub Judul dari F3) -->
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <p class="text-xs text-blue-600 font-semibold uppercase tracking-wider">${data.subTitleRealisasi}</p>
+                                    <p class="text-base font-bold text-blue-900 mt-1">${formatNumber(item.realisasi)}</p>
+                                    <span class="inline-block mt-2 text-xs font-medium bg-blue-200 text-blue-800 px-2 py-0.5 rounded">
+                                        ${formatPercent(item.realisasiPersen)}
+                                    </span>
+                                </div>
+                                <!-- Kolom Rencana (Menggunakan Sub Judul dari H3) -->
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">${data.subTitleRencana}</p>
+                                    <p class="text-base font-bold text-gray-800 mt-1">${formatNumber(item.rencana)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', card);
+                });
+
+                // 2. Render Card Total (Baris 8 di Sheet)
+                if (data.total && data.total.kategori) {
+                    const totalCard = `
+                        <div class="bg-slate-800 text-white rounded-xl shadow-md overflow-hidden p-6 md:col-span-2">
+                            <h2 class="text-xl font-bold border-b border-slate-700 pb-2 mb-4">${data.total.kategori}</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-xs text-slate-400 font-semibold uppercase">${data.subTitleRealisasi}</p>
+                                    <p class="text-2xl font-bold text-emerald-400 mt-1">${formatNumber(data.total.realisasi)}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 font-semibold uppercase">${data.subTitleRencana}</p>
+                                    <p class="text-2xl font-bold text-gray-200 mt-1">${formatNumber(data.total.rencana)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', totalCard);
+                }
+
+            } catch (error) {
+                console.error("Gagal fetch data dashboard:", error);
+                titleEl.innerText = "Gagal Menghubungkan ke API Google Apps Script";
+            }
+        }
+
+        // Jalankan fetch ulang setiap kali pilihan dropdown diubah
+        document.getElementById('bidang-selector').addEventListener('change', (e) => {
+            fetchDashboardData(e.target.value);
+        });
+
+        // Tampilkan data pertama kali secara otomatis (sesuai opsi default pertama: keuangan)
+        fetchDashboardData(document.getElementById('bidang-selector').value);
+    </script>
+</body>
+</html>
