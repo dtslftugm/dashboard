@@ -80,16 +80,40 @@ function handleDataDashboard(data) {
 
     titleEl.innerText = data.groupTitle;
 
-    // 1. Loop dan Render Kategori (Hanya Persentase)
+    // 1. Loop dan Render Kategori (Tampilan Grid 4 Kolom Khusus Persentase)
     data.items.forEach(item => {
+        // Menghitung persentase realisasi tahun 2025 terhadap rencana tahun 2026
+        // Atau jika di GAS Anda mengirimkan persentase langsung, silakan disesuaikan.
+        const persen2025 = item.rencana > 0 ? formatPercent(item.realisasi2025 / item.rencana) : "0.00%";
+
         const card = `
-            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-6 hover:shadow-lg transition">
-                <h2 class="text-lg font-bold text-blue-900 border-b border-gray-100 pb-2 mb-4">${item.kategori}</h2>
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="bg-blue-50 p-4 rounded-lg text-center">
-                        <p class="text-xs text-blue-600 font-semibold uppercase tracking-wider">Persentase Realisasi (2026)</p>
-                        <p class="text-3xl font-extrabold text-blue-900 mt-2">
-                            ${formatPercent(item.realisasiPersen)}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-6 md:col-span-2 hover:shadow-lg transition">
+                <h2 class="text-lg font-bold text-blue-900 border-b border-gray-100 pb-3 mb-4">${item.kategori}</h2>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <!-- Kolom 1: Realisasi 2026 -->
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <p class="text-[10px] text-blue-600 font-bold uppercase tracking-wider">Realisasi 2026</p>
+                        <p class="text-xl font-extrabold text-blue-950 mt-1">${formatPercent(item.realisasiPersen)}</p>
+                    </div>
+
+                    <!-- Kolom 2: Rencana/Target 2026 -->
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Rencana 2026</p>
+                        <p class="text-xl font-extrabold text-gray-700 mt-1">100.00%</p>
+                    </div>
+
+                    <!-- Kolom 3: Realisasi 2025 -->
+                    <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                        <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Realisasi 2025</p>
+                        <p class="text-xl font-extrabold text-emerald-950 mt-1">${persen2025}</p>
+                    </div>
+
+                    <!-- Kolom 4: Pertumbuhan / Deviasi -->
+                    <div class="bg-amber-50 p-3 rounded-lg border border-amber-100 flex flex-col justify-center">
+                        <p class="text-[10px] text-amber-600 font-bold uppercase tracking-wider">Selisih Serapan</p>
+                        <p class="text-lg font-bold text-amber-950 mt-1">
+                            ${( (item.realisasiPersen - (item.realisasi2025 / item.rencana)) * 100 ).toFixed(2)}%
                         </p>
                     </div>
                 </div>
@@ -98,16 +122,41 @@ function handleDataDashboard(data) {
         container.insertAdjacentHTML('beforeend', card);
     });
 
-    // 2. Render Card Total (Hanya Persentase)
+    // 2. Render Card Total (Tampilan Grid 4 Kolom Khusus Persentase)
     if (data.total && data.total.kategori) {
+        const totalPersen2025 = data.total.rencana > 0 ? formatPercent(data.total.realisasi2025 / data.total.rencana) : "0.00%";
+        const selisihTotal = ( (data.total.realisasiPersen - (data.total.realisasi2025 / data.total.rencana)) * 100 ).toFixed(2);
+
         const totalCard = `
-            <div class="bg-slate-800 text-white rounded-xl shadow-md overflow-hidden p-6 md:col-span-2 text-center">
-                <h2 class="text-xl font-bold border-b border-slate-700 pb-2 mb-4">${data.total.kategori}</h2>
-                <div class="bg-slate-900/50 p-4 rounded-lg inline-block mx-auto min-w-[200px]">
-                    <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Total Realisasi (2026)</p>
-                    <p class="text-4xl font-extrabold text-emerald-400 mt-2">
-                        ${formatPercent(data.total.realisasiPersen)}
-                    </p>
+            <div class="bg-slate-800 text-white rounded-xl shadow-md overflow-hidden p-6 md:col-span-2">
+                <h2 class="text-xl font-bold border-b border-slate-700 pb-3 mb-4">${data.total.kategori}</h2>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <!-- Kolom 1: Total Realisasi 2026 -->
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                        <p class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Total Realisasi 2026</p>
+                        <p class="text-xl font-extrabold text-emerald-300 mt-1">${formatPercent(data.total.realisasiPersen)}</p>
+                    </div>
+
+                    <!-- Kolom 2: Total Rencana 2026 -->
+                    <div class="bg-slate-900/30 p-3 rounded-lg border border-slate-700/50">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Rencana 2026</p>
+                        <p class="text-xl font-extrabold text-slate-300 mt-1">100.00%</p>
+                    </div>
+
+                    <!-- Kolom 3: Total Realisasi 2025 -->
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                        <p class="text-[10px] text-sky-400 font-bold uppercase tracking-wider">Total Realisasi 2025</p>
+                        <p class="text-xl font-extrabold text-sky-300 mt-1">${totalPersen2025}</p>
+                    </div>
+
+                    <!-- Kolom 4: Selisih Total -->
+                    <div class="bg-slate-900/30 p-3 rounded-lg border border-slate-700/50 flex flex-col justify-center">
+                        <p class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Selisih Serapan</p>
+                        <p class="text-lg font-bold text-white mt-1">
+                            ${selisihTotal}%
+                        </p>
+                    </div>
                 </div>
             </div>
         `;
