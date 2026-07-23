@@ -441,32 +441,32 @@
 
     /* META ROW */
     .card-meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 12px;
     }
 
     .meta-item {
       background: var(--surface2);
       border-radius: 6px;
-      padding: 5px 8px;
-      flex: 1;
-      min-width: 60px;
+      padding: 6px;
+      text-align: center;
     }
 
     .meta-label {
-      font-size: 9px;
+      font-size: 8.5px;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.3px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .meta-val {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text);
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
     /* LOADING */
@@ -721,6 +721,10 @@
 
             const baseline = item.baseline2025 !== null ? formatValue(item.baseline2025) : "—";
             const target26 = item.target2026 !== null ? formatValue(item.target2026) : "—";
+            const target27 = item.target2027 !== null ? formatValue(item.target2027) : "—";
+            const target28 = item.target2028 !== null ? formatValue(item.target2028) : "—";
+            const target29 = item.target2029 !== null ? formatValue(item.target2029) : "—";
+            const target30 = item.target2030 !== null ? formatValue(item.target2030) : "—";
 
             html += `<div class="card ${cls}">
           <div class="card-top">
@@ -739,16 +743,28 @@
           </div>
           <div class="card-meta">
             <div class="meta-item">
-              <div class="meta-label">Baseline '25</div>
+              <div class="meta-label">Base '25</div>
               <div class="meta-val">${baseline}</div>
             </div>
             <div class="meta-item">
-              <div class="meta-label">Target '26</div>
+              <div class="meta-label">Tgt '26</div>
               <div class="meta-val">${target26}</div>
             </div>
             <div class="meta-item">
-              <div class="meta-label">Target '30</div>
-              <div class="meta-val">${item.target2030 !== null ? formatValue(item.target2030) : "—"}</div>
+              <div class="meta-label">Tgt '27</div>
+              <div class="meta-val">${target27}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tgt '28</div>
+              <div class="meta-val">${target28}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tgt '29</div>
+              <div class="meta-val">${target29}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tgt '30</div>
+              <div class="meta-val">${target30}</div>
             </div>
           </div>
         </div>`;
