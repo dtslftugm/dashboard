@@ -163,65 +163,146 @@
       margin-top: 1px;
     }
 
-    /* FILTERS */
-    .filters {
+    /* NEW FILTERS UI */
+    .filter-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .filter-top {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
       align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
     }
-
+    .filter-group-inline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .filter-chips {
+      display: flex;
+      gap: 4px;
+      background: var(--surface2);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .f-chip {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .f-chip:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: #6366f1;
+    }
+    .f-chip.active {
+      background: #3b82f6;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus {
+      border-color: #3b82f6;
+    }
+    .program-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .btn-lanjutan {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-lanjutan:hover {
+      background: rgba(59, 130, 246, 0.2);
+    }
+    .filter-lanjutan-panel {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .filter-lanjutan-panel.open {
+      display: grid;
+    }
     .filter-group {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      flex: 1;
-      min-width: 160px;
     }
-
-    .filter-group label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
     .filter-group select {
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
       font-family: 'Inter', sans-serif;
       outline: none;
       cursor: pointer;
-      transition: border-color 0.2s;
-      width: 100%;
     }
-
-    .filter-group select:focus {
-      border-color: #6366f1;
+    
+    /* GRID HEADER */
+    .grid-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
-
-    .btn-reset {
-      background: var(--surface2);
-      border: 1px solid var(--border);
+    .grid-header-wrap h2 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .grid-target-info {
+      font-size: 11px;
       color: var(--text-muted);
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s;
-      align-self: flex-end;
-      white-space: nowrap;
-    }
-
-    .btn-reset:hover {
-      border-color: #6366f1;
-      color: #6366f1;
+      font-weight: 600;
     }
 
     /* STATS BAR */
@@ -750,25 +831,68 @@
           🌙
         </button>
       </div>
-      <div class="filters">
-        <div class="filter-group">
-          <label for="filter-bidang">Bidang</label>
-          <select id="filter-bidang">
-            <option value="">— Semua Bidang —</option>
-          </select>
+      <div class="filter-panel">
+        <div class="filter-top">
+          <div class="filter-group-inline">
+            <span class="filter-label">Tahun:</span>
+            <div class="filter-chips" id="filter-tahun">
+              <button class="f-chip active" data-val="2026">2026</button>
+              <button class="f-chip" data-val="2027">2027</button>
+              <button class="f-chip" data-val="2028">2028</button>
+              <button class="f-chip" data-val="2029">2029</button>
+              <button class="f-chip" data-val="2030">2030</button>
+            </div>
+          </div>
+          
+          <div class="filter-group-inline">
+            <span class="filter-label">Level:</span>
+            <div class="filter-chips" id="filter-level">
+              <button class="f-chip active" data-val="">Semua</button>
+              <button class="f-chip" data-val="Payung">Payung</button>
+              <button class="f-chip" data-val="Aksi">Aksi</button>
+            </div>
+          </div>
+          
+          <div class="filter-group-inline">
+            <span class="filter-label">Prioritas:</span>
+            <div class="filter-chips" id="filter-prioritas">
+              <button class="f-chip active" data-val="">Semua</button>
+              <button class="f-chip" data-val="1">P1</button>
+              <button class="f-chip" data-val="2">P2</button>
+              <button class="f-chip" data-val="3">P3</button>
+            </div>
+          </div>
+          
+          <div class="search-box">
+            <input type="text" id="filter-search" placeholder="Cari program, gap, indikator...">
+          </div>
+          
+          <div class="program-count" id="program-count">0 / 0 program</div>
         </div>
-        <div class="filter-group">
-          <label for="filter-payung">Program Payung</label>
-          <select id="filter-payung">
-            <option value="">— Semua Program —</option>
-          </select>
+        
+        <button class="btn-lanjutan" id="btn-lanjutan">Filter Lanjutan ▲</button>
+        
+        <div class="filter-lanjutan-panel" id="filter-lanjutan-panel">
+          <div class="filter-group">
+            <span class="filter-label">Bidang:</span>
+            <select id="filter-bidang"><option value="">Semua Bidang</option></select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Program Payung:</span>
+            <select id="filter-payung"><option value="">Semua Program Payung</option></select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">PIC:</span>
+            <select id="filter-pic"><option value="">Semua PIC</option></select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Sumber Gap:</span>
+            <select id="filter-sumber"><option value="">Semua Sumber Gap</option></select>
+          </div>
         </div>
-        <button class="btn-reset" id="btn-reset">↺ Reset</button>
       </div>
     </div>
   </header>
-
-  <div class="stats-bar" id="stats-bar"></div>
 
   <main class="main" id="main-content">
     <div class="loading-overlay" id="loading">
@@ -784,12 +908,7 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
     const CACHE_KEY  = "renstra_raw_v3";
     const CACHE_TTL  = 30 * 60 * 1000; // 30 menit
-
-    // Tahun berjalan (auto): jadwal & realisasi tampilkan Q1-Q4 tahun ini
-    const CUR_YEAR  = new Date().getFullYear();
-    const BASE_YEAR = 2026;
-    // Offset Q (0-19): 0=2026Q1, 4=2027Q1, dst.
-    const YR_OFF    = Math.max(0, Math.min(16, (CUR_YEAR - BASE_YEAR) * 4));
+    const BASE_YEAR  = 2026;
 
     // Label PIC (singkat) untuk chip RASCE
     const PIC_LABELS = [
@@ -830,6 +949,22 @@
     // ============================================================
     let allData = [];
     let colMap  = {};
+    
+    // Auto-detect year initially, clamp to 2026-2030
+    let initialYear = new Date().getFullYear();
+    if (initialYear < 2026) initialYear = 2026;
+    if (initialYear > 2030) initialYear = 2030;
+
+    let filterState = {
+      tahun: initialYear,
+      level: "",
+      prioritas: "",
+      search: "",
+      bidang: "",
+      payung: "",
+      pic: "",
+      sumber: ""
+    };
 
     // ============================================================
     // UTILS
@@ -921,9 +1056,9 @@
     }
 
     // ── Persentase selesai (tahun berjalan) ──
-    function hitungPersen(item) {
-      const jSlice = item.jadwal.slice(YR_OFF, YR_OFF + 4);
-      const pSlice = item.pelaksanaan.slice(YR_OFF, YR_OFF + 4);
+    function hitungPersen(item, yrOff) {
+      const jSlice = item.jadwal.slice(yrOff, yrOff + 4);
+      const pSlice = item.pelaksanaan.slice(yrOff, yrOff + 4);
       const totalJ = jSlice.filter(isTruthy).length;
       if (totalJ === 0) return null;
       const totalP = pSlice.filter(isTruthy).length;
@@ -964,8 +1099,8 @@
     // ============================================================
     // CARD HTML BUILDER
     // ============================================================
-    function buildCard(item, bidangCls) {
-      const pct = hitungPersen(item);
+    function buildCard(item, bidangCls, targetYear, yrOff) {
+      const pct = hitungPersen(item, yrOff);
       const pgPct = progressPct(item);
 
       // ── Badges baris atas ──
@@ -1007,8 +1142,8 @@
 
       // ── Jadwal & Realisasi Q chips (tahun berjalan) ──
       const qLabels = ["Q1","Q2","Q3","Q4"];
-      const jadwalQ = item.jadwal.slice(YR_OFF, YR_OFF + 4);
-      const realQ   = item.pelaksanaan.slice(YR_OFF, YR_OFF + 4);
+      const jadwalQ = item.jadwal.slice(yrOff, yrOff + 4);
+      const realQ   = item.pelaksanaan.slice(yrOff, yrOff + 4);
       const jadwalChips = qLabels.map((lbl, i) =>
         `<span class="q-chip${isTruthy(jadwalQ[i]) ? " scheduled" : ""}">${lbl}</span>`
       ).join("");
@@ -1022,8 +1157,8 @@
       }).join("");
 
       // ── KPI: Baseline → Target tahun berjalan → Ultimate ──
-      const targetCurYear = item[`target${CUR_YEAR}`] ?? item.target2026;
-      const tgtLabel = `Target ${CUR_YEAR}`;
+      const targetCurYear = item[`target${targetYear}`] ?? item.target2026;
+      const tgtLabel = `Target ${targetYear}`;
 
       // ── Footer: Gap, Note, Remark ──
       let footerRows = "";
@@ -1083,49 +1218,22 @@
         return;
       }
 
-      // Kelompokkan per Bidang → per Indikator
-      const grouped = {};
+      const yrOff = Math.max(0, Math.min(16, (filterState.tahun - BASE_YEAR) * 4));
+
+      let html = `
+        <div class="grid-header-wrap">
+          <h2>Daftar Program</h2>
+          <span class="grid-target-info">Target tampil: ${filterState.tahun}</span>
+        </div>
+        <div class="cards-grid">
+      `;
+
       data.forEach(item => {
-        const b = item.bidang || "Lainnya";
-        const ind = item.indikator || "Umum";
-        if (!grouped[b]) grouped[b] = {};
-        if (!grouped[b][ind]) grouped[b][ind] = [];
-        grouped[b][ind].push(item);
+        const key = bidangKey(item.bidang);
+        html += buildCard(item, `bidang-${key}`, filterState.tahun, yrOff);
       });
 
-      const bidangOrder = ["Pendidikan","Penelitian","PkM","SDM","Ekosistem"];
-      const sortedBidang = Object.keys(grouped).sort((a, b) => {
-        const ia = bidangOrder.findIndex(x => a.toLowerCase().includes(x.toLowerCase()));
-        const ib = bidangOrder.findIndex(x => b.toLowerCase().includes(x.toLowerCase()));
-        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-      });
-
-      let html = "";
-      sortedBidang.forEach(bidang => {
-        const key = bidangKey(bidang);
-        const color = bidangColor(bidang);
-        const indikators = grouped[bidang];
-        const total = Object.values(indikators).reduce((s, arr) => s + arr.length, 0);
-
-        html += `<section class="bidang-section">
-<div class="bidang-header">
-  <div class="bidang-dot" style="background:${color}"></div>
-  <h2>${esc(bidang)}</h2>
-  <span class="bidang-count">${total} program</span>
-</div>`;
-
-        Object.entries(indikators).forEach(([indikator, items]) => {
-          html += `<div class="indikator-group">
-<div class="indikator-header">📌 ${esc(indikator)}</div>
-<div class="cards-grid">`;
-          items.forEach(item => {
-            html += buildCard(item, `bidang-${key}`);
-          });
-          html += `</div></div>`;
-        });
-        html += `</section>`;
-      });
-
+      html += `</div>`;
       container.innerHTML = html;
     }
 
@@ -1133,41 +1241,38 @@
     // FILTER & STATS
     // ============================================================
     function applyFilter() {
-      const selB = document.getElementById("filter-bidang").value;
-      const selP = document.getElementById("filter-payung").value;
       let filtered = allData;
-      if (selB) filtered = filtered.filter(d => d.bidang === selB);
-      if (selP) filtered = filtered.filter(d => d.programPayung === selP);
+      
+      if (filterState.level) {
+        filtered = filtered.filter(d => d.level === filterState.level);
+      }
+      if (filterState.prioritas) {
+        filtered = filtered.filter(d => String(d.priority) === filterState.prioritas);
+      }
+      if (filterState.bidang) {
+        filtered = filtered.filter(d => d.bidang === filterState.bidang);
+      }
+      if (filterState.payung) {
+        filtered = filtered.filter(d => d.programPayung === filterState.payung);
+      }
+      if (filterState.pic) {
+        filtered = filtered.filter(d => d.rasce.some(r => r.short === filterState.pic || r.label === filterState.pic));
+      }
+      if (filterState.sumber) {
+        filtered = filtered.filter(d => d.sumberGap && d.sumberGap.includes(filterState.sumber));
+      }
+      if (filterState.search) {
+        const s = filterState.search.toLowerCase();
+        filtered = filtered.filter(d => 
+          (d.program && d.program.toLowerCase().includes(s)) ||
+          (d.indikator && d.indikator.toLowerCase().includes(s)) ||
+          (d.gap && d.gap.toLowerCase().includes(s)) ||
+          (d.id && d.id.toLowerCase().includes(s))
+        );
+      }
+
+      document.getElementById("program-count").innerText = `${filtered.length} / ${allData.length} program`;
       renderDashboard(filtered);
-      updateStats(filtered);
-      updatePayungOptions(selB, selP);
-    }
-
-    function updatePayungOptions(selB, keepVal) {
-      const src = selB ? allData.filter(d => d.bidang === selB) : allData;
-      const set = {};
-      src.forEach(d => { if (d.programPayung) set[d.programPayung] = true; });
-      const sel = document.getElementById("filter-payung");
-      sel.innerHTML = `<option value="">— Semua Program —</option>`;
-      Object.keys(set).sort().forEach(p => {
-        const opt = document.createElement("option");
-        opt.value = p;
-        opt.textContent = p.length > 55 ? p.substring(0, 55) + "…" : p;
-        if (p === keepVal) opt.selected = true;
-        sel.appendChild(opt);
-      });
-    }
-
-    function updateStats(data) {
-      const payung = data.filter(d => d.level === "Payung").length;
-      const aksi   = data.filter(d => d.level === "Aksi").length;
-      const p1     = data.filter(d => String(d.priority) === "1").length;
-      document.getElementById("stats-bar").innerHTML = `
-<div class="stat-chip">Total: <strong>${data.length} Program</strong></div>
-<div class="stat-chip">Payung: <strong>${payung}</strong></div>
-<div class="stat-chip">Aksi: <strong>${aksi}</strong></div>
-<div class="stat-chip">P1: <strong>${p1}</strong></div>
-<div class="stat-chip">Tahun: <strong>${CUR_YEAR}</strong></div>`;
     }
 
     // ============================================================
@@ -1212,20 +1317,44 @@
     function processAndRender(raw) {
       allData = parseRawData(raw);
 
-      // Isi dropdown Bidang
-      const bidangSet = {};
-      allData.forEach(d => { if (d.bidang) bidangSet[d.bidang] = true; });
-      const selB = document.getElementById("filter-bidang");
-      selB.innerHTML = `<option value="">— Semua Bidang —</option>`;
-      Object.keys(bidangSet).sort().forEach(b => {
-        const opt = document.createElement("option");
-        opt.value = b; opt.textContent = b;
-        selB.appendChild(opt);
+      // Populate Lanjutan Dropdowns
+      const setBidang = new Set();
+      const setPayung = new Set();
+      const setPic = new Set();
+      const setSumber = new Set();
+
+      allData.forEach(d => {
+        if (d.bidang) setBidang.add(d.bidang);
+        if (d.programPayung) setPayung.add(d.programPayung);
+        if (d.sumberGap) {
+          d.sumberGap.split(/[,;]/).forEach(s => setSumber.add(s.trim()));
+        }
+        d.rasce.forEach(p => setPic.add(p.short));
       });
 
-      updatePayungOptions("", "");
-      renderDashboard(allData);
-      updateStats(allData);
+      const fillSelect = (id, set, def) => {
+        const el = document.getElementById(id);
+        el.innerHTML = `<option value="">${def}</option>`;
+        Array.from(set).filter(Boolean).sort().forEach(v => {
+          const opt = document.createElement("option");
+          opt.value = v;
+          opt.textContent = v.length > 55 ? v.substring(0, 55) + "…" : v;
+          el.appendChild(opt);
+        });
+      };
+
+      fillSelect("filter-bidang", setBidang, "Semua Bidang");
+      fillSelect("filter-payung", setPayung, "Semua Program Payung");
+      fillSelect("filter-pic", setPic, "Semua PIC");
+      fillSelect("filter-sumber", setSumber, "Semua Sumber Gap");
+
+      // Initialize UI for chips
+      document.querySelectorAll('#filter-tahun .f-chip').forEach(btn => {
+        if(btn.dataset.val == filterState.tahun) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      applyFilter();
     }
 
     // ============================================================
@@ -1257,18 +1386,56 @@
     // ============================================================
     // EVENT LISTENERS
     // ============================================================
-    document.getElementById("filter-bidang").addEventListener("change", applyFilter);
-    document.getElementById("filter-payung").addEventListener("change", applyFilter);
-    document.getElementById("btn-reset").addEventListener("click", () => {
-      document.getElementById("filter-bidang").value = "";
-      updatePayungOptions("", "");
-      document.getElementById("filter-payung").value = "";
-      renderDashboard(allData);
-      updateStats(allData);
+    // Chips Listeners
+    function setupChips(containerId, stateKey) {
+      document.getElementById(containerId).addEventListener("click", e => {
+        if (e.target.classList.contains("f-chip")) {
+          // Update active class
+          document.querySelectorAll(`#${containerId} .f-chip`).forEach(b => b.classList.remove("active"));
+          e.target.classList.add("active");
+          // Update state and re-filter
+          filterState[stateKey] = e.target.dataset.val;
+          if(stateKey === 'tahun') filterState.tahun = parseInt(e.target.dataset.val);
+          applyFilter();
+        }
+      });
+    }
+
+    setupChips("filter-tahun", "tahun");
+    setupChips("filter-level", "level");
+    setupChips("filter-prioritas", "prioritas");
+
+    // Search Box Listener
+    const searchInput = document.getElementById("filter-search");
+    let searchTimeout;
+    searchInput.addEventListener("input", e => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        filterState.search = e.target.value;
+        applyFilter();
+      }, 300);
     });
 
-    // Tombol Reset double-click → paksa refresh dari GAS (hapus cache)
-    document.getElementById("btn-reset").addEventListener("dblclick", () => {
+    // Toggle Lanjutan
+    const btnLanjutan = document.getElementById("btn-lanjutan");
+    const panelLanjutan = document.getElementById("filter-lanjutan-panel");
+    btnLanjutan.addEventListener("click", () => {
+      panelLanjutan.classList.toggle("open");
+      if (panelLanjutan.classList.contains("open")) {
+        btnLanjutan.innerHTML = "Filter Lanjutan ▼";
+      } else {
+        btnLanjutan.innerHTML = "Filter Lanjutan ▲";
+      }
+    });
+
+    // Dropdowns Listeners
+    document.getElementById("filter-bidang").addEventListener("change", e => { filterState.bidang = e.target.value; applyFilter(); });
+    document.getElementById("filter-payung").addEventListener("change", e => { filterState.payung = e.target.value; applyFilter(); });
+    document.getElementById("filter-pic").addEventListener("change", e => { filterState.pic = e.target.value; applyFilter(); });
+    document.getElementById("filter-sumber").addEventListener("change", e => { filterState.sumber = e.target.value; applyFilter(); });
+
+    // Double click header to clear cache (since we removed the reset button)
+    document.querySelector(".header-title").addEventListener("dblclick", () => {
       clearCache();
       fetchData(true);
     });
