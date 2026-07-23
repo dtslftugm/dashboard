@@ -19,13 +19,34 @@
     }
 
     :root {
+      /* Default Light Theme */
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --radius: 14px;
+
+      --pendidikan: #4f46e5;
+      --pendidikan-bg: rgba(79, 70, 229, 0.1);
+      --penelitian: #9333ea;
+      --penelitian-bg: rgba(147, 51, 234, 0.1);
+      --pkm: #059669;
+      --pkm-bg: rgba(5, 150, 105, 0.1);
+      --sdm: #d97706;
+      --sdm-bg: rgba(217, 119, 6, 0.1);
+      --ekosistem: #0891b2;
+      --ekosistem-bg: rgba(8, 145, 178, 0.1);
+    }
+
+    [data-theme="dark"] {
       --bg: #0f1117;
       --surface: #1a1d27;
       --surface2: #22263a;
       --border: rgba(255, 255, 255, 0.08);
       --text: #e8eaf6;
       --text-muted: #8b92b3;
-      --radius: 14px;
 
       --pendidikan: #6366f1;
       --pendidikan-bg: rgba(99, 102, 241, 0.12);
@@ -48,7 +69,7 @@
 
     /* HEADER */
     .header {
-      background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+      background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
       border-bottom: 1px solid var(--border);
       padding: 20px 20px 16px;
       position: sticky;
@@ -70,6 +91,16 @@
       flex-wrap: wrap;
     }
 
+    .logo-container {
+      flex-shrink: 0;
+    }
+
+    .dtsl-logo {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
     .logo-badge {
       background: linear-gradient(135deg, #6366f1, #a855f7);
       border-radius: 10px;
@@ -80,6 +111,26 @@
       justify-content: center;
       font-size: 18px;
       flex-shrink: 0;
+    }
+
+    .theme-toggle {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: auto;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      border-color: #6366f1;
     }
 
     .header-title h1 {
@@ -349,28 +400,28 @@
     }
 
     .badge-payung {
-      background: rgba(99, 102, 241, 0.2);
-      color: #a5b4fc;
+      background: var(--pendidikan-bg);
+      color: var(--pendidikan);
     }
 
     .badge-aksi {
-      background: rgba(16, 185, 129, 0.2);
-      color: #6ee7b7;
+      background: var(--pkm-bg);
+      color: var(--pkm);
     }
 
     .badge-p1 {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
     }
 
     .badge-p2 {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fcd34d;
+      background: var(--sdm-bg);
+      color: var(--sdm);
     }
 
     .badge-p3 {
-      background: rgba(107, 114, 128, 0.2);
-      color: #9ca3af;
+      background: rgba(107, 114, 128, 0.15);
+      color: #6b7280;
     }
 
     .card-title {
@@ -416,27 +467,27 @@
     /* Warna value box per bidang */
     .card.bidang-pendidikan .card-value-box {
       background: var(--pendidikan-bg);
-      color: #a5b4fc;
+      color: var(--pendidikan);
     }
 
     .card.bidang-penelitian .card-value-box {
       background: var(--penelitian-bg);
-      color: #d8b4fe;
+      color: var(--penelitian);
     }
 
     .card.bidang-pkm .card-value-box {
       background: var(--pkm-bg);
-      color: #6ee7b7;
+      color: var(--pkm);
     }
 
     .card.bidang-sdm .card-value-box {
       background: var(--sdm-bg);
-      color: #fcd34d;
+      color: var(--sdm);
     }
 
     .card.bidang-ekosistem .card-value-box {
       background: var(--ekosistem-bg);
-      color: #67e8f9;
+      color: var(--ekosistem);
     }
 
     /* META ROW */
@@ -572,11 +623,17 @@
   <header class="header">
     <div class="header-inner">
       <div class="header-top">
-        <div class="logo-badge">📊</div>
+        <div class="logo-container">
+          <img src="logo%20DTSL.png" alt="Logo DTSL" class="dtsl-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="logo-badge" style="display:none;">📊</div>
+        </div>
         <div class="header-title">
           <h1>Dashboard Renstra DTSL</h1>
           <p>Departemen Teknik Sipil &amp; Lingkungan – Universitas Gadjah Mada</p>
         </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+          🌙
+        </button>
       </div>
       <div class="filters">
         <div class="filter-group">
@@ -612,6 +669,33 @@
     // Isi dengan URL GAS Web App baru setelah deploy code_renstra_master.gs
     // (bukan URL lama — URL lama adalah child untuk detail per kategori)
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
+
+    // ============================================================
+    // THEME TOGGLE
+    // ============================================================
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+      themeToggleBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    // Set initial theme
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      applyTheme(currentTheme);
+    } else if (prefersDarkScheme.matches) {
+      applyTheme("dark");
+    } else {
+      applyTheme("light");
+    }
+
+    themeToggleBtn.addEventListener("click", function () {
+      let theme = document.documentElement.getAttribute("data-theme");
+      applyTheme(theme === "dark" ? "light" : "dark");
+    });
 
     // ============================================================
     // STATE
