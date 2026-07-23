@@ -20,17 +20,24 @@
 
     :root {
       /* Default Light Theme (Matches dtsl.vercel.app) */
-      --bg: #f9fafb; /* gray-50 */
+      --bg: #f9fafb;
+      /* gray-50 */
       --surface: #ffffff;
-      --surface2: #f3f4f6; /* gray-100 */
-      --border: #e5e7eb; /* gray-200 */
-      --text: #1f2937; /* gray-800 */
-      --text-muted: #6b7280; /* gray-500 */
+      --surface2: #f3f4f6;
+      /* gray-100 */
+      --border: #e5e7eb;
+      /* gray-200 */
+      --text: #1f2937;
+      /* gray-800 */
+      --text-muted: #6b7280;
+      /* gray-500 */
       --radius: 14px;
 
-      --header-bg: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%); /* blue-900 to blue-700 */
+      --header-bg: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+      /* blue-900 to blue-700 */
       --header-text: #ffffff;
-      --header-text-muted: #bfdbfe; /* blue-200 */
+      --header-text-muted: #bfdbfe;
+      /* blue-200 */
 
       --pendidikan: #4f46e5;
       --pendidikan-bg: rgba(79, 70, 229, 0.1);
@@ -582,49 +589,145 @@
     }
 
     /* SCROLLBAR */
-    ::-webkit-scrollbar {
-      width: 6px;
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+    /* ── PCT BADGE (pojok kanan atas card) ── */
+    .pct-badge {
+      font-size: 9px; font-weight: 700; padding: 2px 8px;
+      border-radius: 20px; background: var(--surface2);
+      color: var(--text-muted); white-space: nowrap;
+    }
+    .pct-badge.pct-full { background: rgba(16,185,129,.15); color: #10b981; }
+    .pct-badge.pct-partial { background: rgba(245,158,11,.15); color: var(--sdm); }
+    .pct-badge.pct-zero { background: var(--surface2); color: var(--text-muted); }
+
+    /* ── TIPE TARGET BADGE ── */
+    .badge-kumulatif { background: rgba(6,182,212,.15); color: var(--ekosistem); }
+    .badge-inkremental { background: rgba(16,185,129,.15); color: var(--pkm); }
+    .badge-tipe { background: var(--surface2); color: var(--text-muted); }
+
+    /* ── CARD SUBTITLE & INDIKATOR ── */
+    .card-program-payung {
+      font-size: 11px; color: var(--text-muted);
+      margin-bottom: 1px; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    .card-indikator-kinerja {
+      font-size: 10px; color: var(--text-muted);
+      font-style: italic; margin-bottom: 10px;
+    }
+    .card-indikator-kinerja span { font-weight: 600; font-style: normal; }
+
+    /* ── KPI BOX (Baseline → Target → Ultimate) ── */
+    .card-kpi {
+      border-radius: 10px; padding: 10px 12px; margin-bottom: 6px;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .kpi-box { flex: 1; min-width: 0; }
+    .kpi-label {
+      font-size: 8px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .4px; opacity: .65; margin-bottom: 2px;
+    }
+    .kpi-value { font-size: 20px; font-weight: 800; letter-spacing: -.5px; line-height: 1.1; }
+    .kpi-unit  { font-size: 9.5px; font-weight: 500; opacity: .7; line-height: 1.4; }
+    .kpi-arrow { display: flex; align-items: center; font-size: 13px; opacity: .45; flex-shrink: 0; padding-top: 12px; }
+    .kpi-ultimate { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
+    .kpi-ultimate .kpi-value { font-size: 17px; }
+
+    /* Warna KPI box per bidang — harus setelah card bidang rules */
+    .card.bidang-pendidikan .card-kpi { background: var(--pendidikan-bg); color: var(--pendidikan); }
+    .card.bidang-penelitian .card-kpi { background: var(--penelitian-bg); color: var(--penelitian); }
+    .card.bidang-pkm       .card-kpi { background: var(--pkm-bg);        color: var(--pkm); }
+    .card.bidang-sdm       .card-kpi { background: var(--sdm-bg);        color: var(--sdm); }
+    .card.bidang-ekosistem .card-kpi { background: var(--ekosistem-bg);  color: var(--ekosistem); }
+
+    /* ── PROGRESS BAR ── */
+    .card-progress {
+      height: 3px; background: rgba(0,0,0,.08);
+      border-radius: 2px; margin-bottom: 10px; overflow: hidden;
+    }
+    [data-theme="dark"] .card-progress { background: rgba(255,255,255,.08); }
+    .card-progress-fill { height: 100%; border-radius: 2px; transition: width .6s ease; }
+    .card.bidang-pendidikan .card-progress-fill { background: var(--pendidikan); }
+    .card.bidang-penelitian .card-progress-fill { background: var(--penelitian); }
+    .card.bidang-pkm        .card-progress-fill { background: var(--pkm); }
+    .card.bidang-sdm        .card-progress-fill { background: var(--sdm); }
+    .card.bidang-ekosistem  .card-progress-fill { background: var(--ekosistem); }
+
+    /* ── JADWAL / REALISASI ── */
+    .card-schedule { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .schedule-row  { display: flex; align-items: center; gap: 5px; }
+    .schedule-label {
+      font-size: 9px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .3px; width: 52px; flex-shrink: 0;
+    }
+    .schedule-chips { display: flex; gap: 4px; }
+    .q-chip {
+      width: 27px; height: 22px; border-radius: 5px;
+      font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface2); color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .q-chip.scheduled { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+    .q-chip.realized  { background: #f97316; color: #fff; border-color: #f97316; }
+    .q-chip.realized-check { background: #10b981; color: #fff; border-color: #10b981; font-size: 12px; }
+
+    /* ── SUMBER GAP ── */
+    .card-sumber { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+    .sumber-label {
+      font-size: 9px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0;
+    }
+    .sumber-chip {
+      font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 12px;
+      background: rgba(99,102,241,.1); color: #6366f1; border: 1px solid rgba(99,102,241,.2);
     }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
+    /* ── RASCE / PIC ── */
+    .card-rasce { display: flex; align-items: flex-start; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+    .rasce-label {
+      font-size: 9px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0; margin-top: 2px;
     }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--surface2);
-      border-radius: 3px;
+    .rasce-chip {
+      display: flex; align-items: center; gap: 3px;
+      font-size: 9px; font-weight: 600; padding: 2px 6px 2px 3px;
+      border-radius: 12px; background: var(--surface2);
+      color: var(--text); border: 1px solid var(--border);
     }
+    .rasce-role {
+      font-size: 8px; font-weight: 800;
+      width: 14px; height: 14px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .role-A { background: #3b82f6; color: #fff; }
+    .role-S { background: #10b981; color: #fff; }
+    .role-R { background: #f97316; color: #fff; }
+    .role-E { background: #a855f7; color: #fff; }
+    .role-C { background: #06b6d4; color: #fff; }
+    .rasce-more { font-size: 9px; color: var(--text-muted); font-weight: 600; padding: 2px 4px; align-self: center; }
 
-    /* RESPONSIVE */
+    /* ── CARD FOOTER ── */
+    .card-footer-info {
+      border-top: 1px solid var(--border); padding-top: 8px;
+      margin-top: 4px; display: flex; flex-direction: column; gap: 3px;
+    }
+    .footer-row { font-size: 10px; color: var(--text-muted); line-height: 1.45; }
+    .footer-row strong { color: var(--text); font-weight: 700; }
+    .footer-row em { font-style: italic; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      .header {
-        padding: 14px 16px 12px;
-      }
-
-      .header-title h1 {
-        font-size: 15px;
-      }
-
-      .filters {
-        gap: 8px;
-      }
-
-      .filter-group {
-        min-width: 140px;
-      }
-
-      .main {
-        padding: 14px 12px;
-      }
-
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .card-value {
-        font-size: 20px;
-      }
+      .header { padding: 14px 16px 12px; }
+      .header-title h1 { font-size: 15px; }
+      .filters { gap: 8px; }
+      .filter-group { min-width: 140px; }
+      .main { padding: 14px 12px; }
+      .cards-grid { grid-template-columns: 1fr; gap: 10px; }
+      .kpi-value { font-size: 17px; }
     }
   </style>
 </head>
@@ -635,7 +738,8 @@
     <div class="header-inner">
       <div class="header-top">
         <div class="logo-container">
-          <img src="logo%20DTSL.png" alt="Logo DTSL" class="dtsl-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <img src="logo%20DTSL.png" alt="Logo DTSL" class="dtsl-logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
           <div class="logo-badge" style="display:none;">📊</div>
         </div>
         <div class="header-title">
@@ -677,47 +781,163 @@
     // ============================================================
     // KONFIGURASI
     // ============================================================
-    // Isi dengan URL GAS Web App baru setelah deploy code_renstra_master.gs
-    // (bukan URL lama — URL lama adalah child untuk detail per kategori)
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
+    const CACHE_KEY  = "renstra_raw_v3";
+    const CACHE_TTL  = 30 * 60 * 1000; // 30 menit
+
+    // Tahun berjalan (auto): jadwal & realisasi tampilkan Q1-Q4 tahun ini
+    const CUR_YEAR  = new Date().getFullYear();
+    const BASE_YEAR = 2026;
+    // Offset Q (0-19): 0=2026Q1, 4=2027Q1, dst.
+    const YR_OFF    = Math.max(0, Math.min(16, (CUR_YEAR - BASE_YEAR) * 4));
+
+    // Label PIC (singkat) untuk chip RASCE
+    const PIC_LABELS = [
+      "PIC Kadep & Sekdep","PIC Dosen DTSL","PIC Tendik DTSL",
+      "PIC Tim SDM, Sarpras, & Keuangan","PIC Tim Kerjasama",
+      "PIC Tim Akademik","PIC Tim Jaminan Mutu",
+      "PIC Prodi TS","PIC Prodi TIL","PIC Prodi TSDA",
+      "PIC Prodi MTS","PIC Prodi MSTT","PIC Prodi MTPBA",
+      "PIC Prodi Doktor TS","PIC Ketua KBK","PIC Task Force","PIC Lain-lain"
+    ];
+    const PIC_SHORT = [
+      "Kadep/Sekdep","Dosen DTSL","Tendik DTSL",
+      "Tim SDM/Sarpras","Tim Kerjasama","Tim Akademik","Tim JM",
+      "Prodi TS","Prodi TIL","Prodi TSDA",
+      "Prodi MTS","Prodi MSTT","Prodi MTPBA",
+      "Prodi Doktor TS","Ketua KBK","Task Force","Lain-lain"
+    ];
 
     // ============================================================
     // THEME TOGGLE
     // ============================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const prefersDark    = window.matchMedia("(prefers-color-scheme: dark)");
 
-    function applyTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("theme", theme);
-      themeToggleBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+    function applyTheme(t) {
+      document.documentElement.setAttribute("data-theme", t);
+      localStorage.setItem("theme", t);
+      themeToggleBtn.textContent = t === "dark" ? "☀️" : "🌙";
     }
-
-    // Set initial theme
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme) {
-      applyTheme(currentTheme);
-    } else if (prefersDarkScheme.matches) {
-      applyTheme("dark");
-    } else {
-      applyTheme("light");
-    }
-
-    themeToggleBtn.addEventListener("click", function () {
-      let theme = document.documentElement.getAttribute("data-theme");
-      applyTheme(theme === "dark" ? "light" : "dark");
+    const savedTheme = localStorage.getItem("theme");
+    applyTheme(savedTheme || (prefersDark.matches ? "dark" : "light"));
+    themeToggleBtn.addEventListener("click", () => {
+      applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
     });
 
     // ============================================================
     // STATE
     // ============================================================
     let allData = [];
-    let bidangList = [];
-    let programPayungList = [];
+    let colMap  = {};
 
     // ============================================================
     // UTILS
     // ============================================================
+    function norm(s) { return String(s ?? "").trim().replace(/\s+/g, " "); }
+
+    function buildColMap(headers) {
+      const m = {};
+      headers.forEach((h, i) => { m[norm(h)] = i; });
+      return m;
+    }
+
+    function isTruthy(v) {
+      if (v === true || v === 1 || v === "1" || v === "TRUE") return true;
+      if (typeof v === "number" && v > 0) return true;
+      if (typeof v === "string" && v.trim() !== "" && v !== "0" && v.toUpperCase() !== "FALSE") return true;
+      return false;
+    }
+
+    function parseRow(row, cm) {
+      const g = (name) => { const i = cm[norm(name)]; return i !== undefined ? row[i] : null; };
+
+      // Jadwal (20 Q: Y-AR = idx 24-43)
+      const jadwal = [];
+      for (let y = 0; y < 5; y++)
+        for (let q = 1; q <= 4; q++)
+          jadwal.push(g(`Jadwal ${BASE_YEAR + y} Q${q}`));
+
+      // Realisasi/Pelaksanaan (20 Q: BJ-CC = idx 61-80)
+      const pelaksanaan = [];
+      for (let y = 0; y < 5; y++)
+        for (let q = 1; q <= 4; q++) {
+          // Header asli: "Pelaksanaan  2026 Q1" (double space), coba dua varian
+          const v = g(`Pelaksanaan ${BASE_YEAR + y} Q${q}`);
+          pelaksanaan.push(v !== null ? v : null);
+        }
+
+      // RASCE: PIC_LABELS, filter non-empty
+      const rasce = PIC_LABELS.map((lbl, idx) => ({
+        short: PIC_SHORT[idx],
+        role: norm(g(lbl))
+      })).filter(p => p.role !== "");
+
+      // Anggaran & Sumber (5 tahun)
+      const anggaran      = [0,1,2,3,4].map(i => g(`Anggaran ${BASE_YEAR + i} (juta Rupiah)`) ?? g(`Anggaran ${BASE_YEAR + i}`));
+      const sumberAnggaran= [0,1,2,3,4].map(i => g(`Sumber anggaran ${BASE_YEAR + i} (% Sumber)`) ?? g(`Sumber anggaran ${BASE_YEAR + i}`));
+
+      return {
+        no:             g("No"),
+        bidang:         norm(g("Bidang")),
+        gap:            norm(g("Gap")),
+        programPayung:  norm(g("Program Payung")),
+        id:             norm(g("ID")),
+        indikator:      norm(g("Indikator Kinerja (Key Performance)")),
+        sumberGap:      norm(g("Sumber Gap")),
+        program:        norm(g("Program (Aksi)")),
+        level:          norm(g("Level")),
+        priority:       g("Priority (1-3)"),
+        value:          g("VALUE"),
+        satuan:         norm(g("Satuan Output")),
+        namaDatabase:   norm(g("Nama Database")),
+        sheetUrl:       norm(g("Sheet")),
+        baseline2025:   g("Baseline (2025)"),
+        target2026:     g("Target 2026"),
+        target2027:     g("Target 2027"),
+        target2028:     g("Target 2028"),
+        target2029:     g("Target 2029"),
+        target2030:     g("Target 2030"),
+        ultimate:       g("Ultimate 2030"),
+        tipeTarget:     norm(g("Tipe Target")),
+        notePerubahan:  norm(g("Note Perubahan")),
+        remark:         norm(g("Remark")),
+        jadwal, rasce, pelaksanaan,
+        evaluasi:       norm(g("Evaluasi")),
+        anggaran, sumberAnggaran
+      };
+    }
+
+    function parseRawData(raw) {
+      if (!raw || raw.length < 2) return [];
+      const cm = buildColMap(raw[0]);
+      colMap = cm;
+      const items = [];
+      for (let i = 1; i < raw.length; i++) {
+        const item = parseRow(raw[i], cm);
+        if (item.program) items.push(item); // skip empty rows
+      }
+      return items;
+    }
+
+    // ── Persentase selesai (tahun berjalan) ──
+    function hitungPersen(item) {
+      const jSlice = item.jadwal.slice(YR_OFF, YR_OFF + 4);
+      const pSlice = item.pelaksanaan.slice(YR_OFF, YR_OFF + 4);
+      const totalJ = jSlice.filter(isTruthy).length;
+      if (totalJ === 0) return null;
+      const totalP = pSlice.filter(isTruthy).length;
+      return Math.round((totalP / totalJ) * 100);
+    }
+
+    // ── Progress bar baseline→ultimate ──
+    function progressPct(item) {
+      const b = parseFloat(item.baseline2025) || 0;
+      const u = parseFloat(item.ultimate) || 0;
+      if (u <= 0) return 0;
+      return Math.min(100, Math.round((b / u) * 100));
+    }
+
     function bidangKey(b) {
       if (!b) return "other";
       const s = b.toLowerCase();
@@ -730,40 +950,135 @@
     }
 
     function bidangColor(b) {
-      const k = bidangKey(b);
-      const map = {
-        pendidikan: "#6366f1",
-        penelitian: "#a855f7",
-        pkm: "#10b981",
-        sdm: "#f59e0b",
-        ekosistem: "#06b6d4",
-        other: "#8b92b3"
-      };
-      return map[k] || map.other;
+      return { pendidikan:"#6366f1", penelitian:"#a855f7", pkm:"#10b981", sdm:"#f59e0b", ekosistem:"#06b6d4", other:"#8b92b3" }[bidangKey(b)] || "#8b92b3";
     }
 
-    function formatValue(v) {
-      // null atau string kosong → N/A (membedakan dari nilai 0)
-      if (v === null || v === undefined || v === "") return "N/A";
-      if (typeof v === "number") {
-        return Number.isInteger(v)
-          ? v.toLocaleString("id-ID")
-          : v.toLocaleString("id-ID", { maximumFractionDigits: 2 });
-      }
+    function fv(v) {
+      if (v === null || v === undefined || v === "") return "—";
+      if (typeof v === "number") return Number.isInteger(v) ? v.toLocaleString("id-ID") : v.toLocaleString("id-ID", { maximumFractionDigits: 2 });
       return String(v);
     }
 
-    function escHtml(s) {
-      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function esc(s) { return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+    // ============================================================
+    // CARD HTML BUILDER
+    // ============================================================
+    function buildCard(item, bidangCls) {
+      const pct = hitungPersen(item);
+      const pgPct = progressPct(item);
+
+      // ── Badges baris atas ──
+      const priBadge   = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
+      const lvlBadge   = item.level === "Payung"
+        ? `<span class="badge badge-payung">Payung</span>`
+        : `<span class="badge badge-aksi">Aksi</span>`;
+      const tipeLower  = (item.tipeTarget || "").toLowerCase();
+      const tipeCls    = tipeLower.includes("kumulatif") ? "badge-kumulatif" : tipeLower.includes("inkrement") ? "badge-inkremental" : "badge-tipe";
+      const tipeBadge  = item.tipeTarget ? `<span class="badge ${tipeCls}">${esc(item.tipeTarget)}</span>` : "";
+
+      // ── Pct badge ──
+      let pctHtml = "";
+      if (pct !== null) {
+        const pctCls = pct >= 100 ? "pct-full" : pct > 0 ? "pct-partial" : "pct-zero";
+        pctHtml = `<span class="pct-badge ${pctCls}">${pct}% selesai</span>`;
+      }
+
+      // ── Sumber Gap chips ──
+      let sumberHtml = "";
+      if (item.sumberGap) {
+        const chips = item.sumberGap.split(/[,;]/).map(s => s.trim()).filter(Boolean)
+          .map(s => `<span class="sumber-chip">${esc(s)}</span>`).join("");
+        sumberHtml = `<div class="card-sumber"><span class="sumber-label">Sumber:</span>${chips}</div>`;
+      }
+
+      // ── RASCE chips (max 3 tampil, sisanya "+N lagi") ──
+      let rasceHtml = "";
+      if (item.rasce.length > 0) {
+        const MAX_RASCE = 3;
+        const shown = item.rasce.slice(0, MAX_RASCE);
+        const more  = item.rasce.length - MAX_RASCE;
+        const chips = shown.map(p =>
+          `<span class="rasce-chip"><span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
+        ).join("");
+        const moreTag = more > 0 ? `<span class="rasce-more">+${more} lagi</span>` : "";
+        rasceHtml = `<div class="card-rasce"><span class="rasce-label">RASCE:</span>${chips}${moreTag}</div>`;
+      }
+
+      // ── Jadwal & Realisasi Q chips (tahun berjalan) ──
+      const qLabels = ["Q1","Q2","Q3","Q4"];
+      const jadwalQ = item.jadwal.slice(YR_OFF, YR_OFF + 4);
+      const realQ   = item.pelaksanaan.slice(YR_OFF, YR_OFF + 4);
+      const jadwalChips = qLabels.map((lbl, i) =>
+        `<span class="q-chip${isTruthy(jadwalQ[i]) ? " scheduled" : ""}">${lbl}</span>`
+      ).join("");
+      const realChips = qLabels.map((lbl, i) => {
+        if (isTruthy(realQ[i])) {
+          return isTruthy(jadwalQ[i])
+            ? `<span class="q-chip realized">${lbl}</span>`
+            : `<span class="q-chip realized-check">✓</span>`;
+        }
+        return `<span class="q-chip">${lbl}</span>`;
+      }).join("");
+
+      // ── KPI: Baseline → Target tahun berjalan → Ultimate ──
+      const targetCurYear = item[`target${CUR_YEAR}`] ?? item.target2026;
+      const tgtLabel = `Target ${CUR_YEAR}`;
+
+      // ── Footer: Gap, Note, Remark ──
+      let footerRows = "";
+      if (item.gap)           footerRows += `<div class="footer-row"><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
+      if (item.notePerubahan) footerRows += `<div class="footer-row"><strong>Note:</strong> ${esc(item.notePerubahan)}</div>`;
+      if (item.remark)        footerRows += `<div class="footer-row"><strong>Remark:</strong> ${esc(item.remark)}</div>`;
+      const footerHtml = footerRows ? `<div class="card-footer-info">${footerRows}</div>` : "";
+
+      return `<div class="card ${bidangCls}">
+  <div class="card-top">
+    <span class="card-id">${esc(item.id)}</span>
+    <div class="card-badges">${priBadge}${lvlBadge}${tipeBadge}</div>
+    ${pctHtml}
+  </div>
+  <div class="card-title">${esc(item.program)}</div>
+  ${item.programPayung ? `<div class="card-program-payung">${esc(item.programPayung)}</div>` : ""}
+  ${item.indikator ? `<div class="card-indikator-kinerja"><span>Indikator:</span> ${esc(item.indikator)}</div>` : ""}
+  <div class="card-kpi">
+    <div class="kpi-box">
+      <div class="kpi-label">Baseline 2025</div>
+      <div class="kpi-value">${fv(item.baseline2025)}</div>
+      <div class="kpi-unit">${esc(item.satuan)}</div>
+    </div>
+    <div class="kpi-arrow">→</div>
+    <div class="kpi-box">
+      <div class="kpi-label">${tgtLabel}</div>
+      <div class="kpi-value">${fv(targetCurYear)}</div>
+      <div class="kpi-unit">${esc(item.satuan)}</div>
+    </div>
+    ${item.ultimate !== null ? `<div class="kpi-ultimate">
+      <div class="kpi-label">Ultimate</div>
+      <div class="kpi-value">${fv(item.ultimate)}</div>
+    </div>` : ""}
+  </div>
+  <div class="card-progress"><div class="card-progress-fill" style="width:${pgPct}%"></div></div>
+  <div class="card-schedule">
+    <div class="schedule-row">
+      <span class="schedule-label">Jadwal:</span>
+      <div class="schedule-chips">${jadwalChips}</div>
+    </div>
+    <div class="schedule-row">
+      <span class="schedule-label">Realisasi:</span>
+      <div class="schedule-chips">${realChips}</div>
+    </div>
+  </div>
+  ${sumberHtml}${rasceHtml}${footerHtml}
+</div>`;
     }
 
     // ============================================================
-    // RENDER
+    // RENDER DASHBOARD
     // ============================================================
     function renderDashboard(data) {
       const container = document.getElementById("main-content");
-
-      if (!data || data.length === 0) {
+      if (!data || !data.length) {
         container.innerHTML = `<div class="empty-state"><div class="emoji">🔍</div><p>Tidak ada data yang sesuai filter.</p></div>`;
         return;
       }
@@ -778,96 +1093,36 @@
         grouped[b][ind].push(item);
       });
 
-      let html = "";
-      const bidangOrder = ["Pendidikan", "Penelitian", "PkM", "SDM", "Ekosistem Berkelanjutan"];
+      const bidangOrder = ["Pendidikan","Penelitian","PkM","SDM","Ekosistem"];
       const sortedBidang = Object.keys(grouped).sort((a, b) => {
         const ia = bidangOrder.findIndex(x => a.toLowerCase().includes(x.toLowerCase()));
         const ib = bidangOrder.findIndex(x => b.toLowerCase().includes(x.toLowerCase()));
         return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
       });
 
+      let html = "";
       sortedBidang.forEach(bidang => {
         const key = bidangKey(bidang);
         const color = bidangColor(bidang);
         const indikators = grouped[bidang];
-        const totalCards = Object.values(indikators).reduce((s, arr) => s + arr.length, 0);
+        const total = Object.values(indikators).reduce((s, arr) => s + arr.length, 0);
 
         html += `<section class="bidang-section">
-      <div class="bidang-header">
-        <div class="bidang-dot" style="background:${color}"></div>
-        <h2>${escHtml(bidang)}</h2>
-        <span class="bidang-count">${totalCards} program</span>
-      </div>`;
+<div class="bidang-header">
+  <div class="bidang-dot" style="background:${color}"></div>
+  <h2>${esc(bidang)}</h2>
+  <span class="bidang-count">${total} program</span>
+</div>`;
 
         Object.entries(indikators).forEach(([indikator, items]) => {
           html += `<div class="indikator-group">
-        <div class="indikator-header">📌 ${escHtml(indikator)}</div>
-        <div class="cards-grid">`;
-
+<div class="indikator-header">📌 ${esc(indikator)}</div>
+<div class="cards-grid">`;
           items.forEach(item => {
-            const cls = `bidang-${key}`;
-            const levelBadge = item.level === "Payung" ? `<span class="badge badge-payung">Payung</span>` : `<span class="badge badge-aksi">Aksi</span>`;
-            const priBadge = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
-
-            // VALUE: tampilkan apa adanya; null/empty → "N/A"
-            // Target 2026 hanya ditampilkan di meta row sebagai referensi
-            const displayValue = item.value;
-            const valueLabel = "Realisasi (VALUE)";
-
-            const baseline = item.baseline2025 !== null ? formatValue(item.baseline2025) : "—";
-            const target26 = item.target2026 !== null ? formatValue(item.target2026) : "—";
-            const target27 = item.target2027 !== null ? formatValue(item.target2027) : "—";
-            const target28 = item.target2028 !== null ? formatValue(item.target2028) : "—";
-            const target29 = item.target2029 !== null ? formatValue(item.target2029) : "—";
-            const target30 = item.target2030 !== null ? formatValue(item.target2030) : "—";
-
-            html += `<div class="card ${cls}">
-          <div class="card-top">
-            <span class="card-id">${escHtml(item.id)}</span>
-            <div class="card-badges">${levelBadge}${priBadge}</div>
-          </div>
-          <div class="card-title">${escHtml(item.program)}</div>
-          <div class="card-value-box">
-            <div>
-              <div class="card-value-label">${valueLabel}</div>
-              <div style="display:flex;align-items:baseline;gap:5px">
-                <span class="card-value">${formatValue(displayValue)}</span>
-                <span class="card-satuan">${escHtml(item.satuan)}</span>
-              </div>
-            </div>
-          </div>
-          <div class="card-meta">
-            <div class="meta-item">
-              <div class="meta-label">Base '25</div>
-              <div class="meta-val">${baseline}</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Tgt '26</div>
-              <div class="meta-val">${target26}</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Tgt '27</div>
-              <div class="meta-val">${target27}</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Tgt '28</div>
-              <div class="meta-val">${target28}</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Tgt '29</div>
-              <div class="meta-val">${target29}</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Tgt '30</div>
-              <div class="meta-val">${target30}</div>
-            </div>
-          </div>
-        </div>`;
+            html += buildCard(item, `bidang-${key}`);
           });
-
           html += `</div></div>`;
         });
-
         html += `</section>`;
       });
 
@@ -875,54 +1130,63 @@
     }
 
     // ============================================================
-    // FILTER
+    // FILTER & STATS
     // ============================================================
     function applyFilter() {
-      const selBidang = document.getElementById("filter-bidang").value;
-      const selPayung = document.getElementById("filter-payung").value;
-
+      const selB = document.getElementById("filter-bidang").value;
+      const selP = document.getElementById("filter-payung").value;
       let filtered = allData;
-      if (selBidang) filtered = filtered.filter(d => d.bidang === selBidang);
-      if (selPayung) filtered = filtered.filter(d => d.programPayung === selPayung);
-
+      if (selB) filtered = filtered.filter(d => d.bidang === selB);
+      if (selP) filtered = filtered.filter(d => d.programPayung === selP);
       renderDashboard(filtered);
       updateStats(filtered);
-
-      // Update program payung dropdown berdasarkan bidang terpilih
-      updatePayungOptions(selBidang, selPayung);
+      updatePayungOptions(selB, selP);
     }
 
-    function updatePayungOptions(selBidang, keepVal) {
-      const src = selBidang ? allData.filter(d => d.bidang === selBidang) : allData;
-      const payungSet = {};
-      src.forEach(d => { if (d.programPayung) payungSet[d.programPayung] = true; });
-
+    function updatePayungOptions(selB, keepVal) {
+      const src = selB ? allData.filter(d => d.bidang === selB) : allData;
+      const set = {};
+      src.forEach(d => { if (d.programPayung) set[d.programPayung] = true; });
       const sel = document.getElementById("filter-payung");
-      const cur = keepVal || sel.value;
       sel.innerHTML = `<option value="">— Semua Program —</option>`;
-      Object.keys(payungSet).sort().forEach(p => {
+      Object.keys(set).sort().forEach(p => {
         const opt = document.createElement("option");
         opt.value = p;
         opt.textContent = p.length > 55 ? p.substring(0, 55) + "…" : p;
-        if (p === cur) opt.selected = true;
+        if (p === keepVal) opt.selected = true;
         sel.appendChild(opt);
       });
     }
 
     function updateStats(data) {
-      const bar = document.getElementById("stats-bar");
-      const total = data.length;
-      const payungCount = data.filter(d => d.level === "Payung").length;
-      const aksiCount = data.filter(d => d.level === "Aksi").length;
-      bar.innerHTML = `
-    <div class="stat-chip">Total: <strong>${total} Program</strong></div>
-    <div class="stat-chip">Payung: <strong>${payungCount}</strong></div>
-    <div class="stat-chip">Aksi: <strong>${aksiCount}</strong></div>
-  `;
+      const payung = data.filter(d => d.level === "Payung").length;
+      const aksi   = data.filter(d => d.level === "Aksi").length;
+      const p1     = data.filter(d => String(d.priority) === "1").length;
+      document.getElementById("stats-bar").innerHTML = `
+<div class="stat-chip">Total: <strong>${data.length} Program</strong></div>
+<div class="stat-chip">Payung: <strong>${payung}</strong></div>
+<div class="stat-chip">Aksi: <strong>${aksi}</strong></div>
+<div class="stat-chip">P1: <strong>${p1}</strong></div>
+<div class="stat-chip">Tahun: <strong>${CUR_YEAR}</strong></div>`;
     }
 
     // ============================================================
-    // FETCH DATA (JSONP)
+    // CACHE (localStorage, TTL 30 menit)
+    // ============================================================
+    function loadCache() {
+      try {
+        const c = JSON.parse(localStorage.getItem(CACHE_KEY));
+        if (c && Date.now() - c.ts < CACHE_TTL) return c.raw;
+      } catch(e) {}
+      return null;
+    }
+    function saveCache(raw) {
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), raw })); } catch(e) {}
+    }
+    function clearCache() { localStorage.removeItem(CACHE_KEY); }
+
+    // ============================================================
+    // HANDLE DATA (JSONP callback)
     // ============================================================
     function handleDataRenstra(payload) {
       const old = document.getElementById("jsonp-script");
@@ -930,39 +1194,62 @@
 
       if (payload.error) {
         document.getElementById("main-content").innerHTML =
-          `<div class="error-box">⚠️ Error dari API: ${escHtml(payload.error)}</div>`;
+          `<div class="error-box">⚠️ Error dari API: ${esc(payload.error)}</div>`;
         return;
       }
 
-      allData = payload.data || [];
-      bidangList = payload.bidangList || [];
-      programPayungList = payload.programPayungList || [];
+      const raw = payload.raw;
+      if (!raw || raw.length < 2) {
+        document.getElementById("main-content").innerHTML =
+          `<div class="empty-state"><div class="emoji">📭</div><p>Data kosong dari spreadsheet.</p></div>`;
+        return;
+      }
+
+      saveCache(raw);
+      processAndRender(raw);
+    }
+
+    function processAndRender(raw) {
+      allData = parseRawData(raw);
 
       // Isi dropdown Bidang
-      const selBidang = document.getElementById("filter-bidang");
-      bidangList.sort().forEach(b => {
+      const bidangSet = {};
+      allData.forEach(d => { if (d.bidang) bidangSet[d.bidang] = true; });
+      const selB = document.getElementById("filter-bidang");
+      selB.innerHTML = `<option value="">— Semua Bidang —</option>`;
+      Object.keys(bidangSet).sort().forEach(b => {
         const opt = document.createElement("option");
         opt.value = b; opt.textContent = b;
-        selBidang.appendChild(opt);
+        selB.appendChild(opt);
       });
 
-      // Isi dropdown Program Payung
       updatePayungOptions("", "");
-
       renderDashboard(allData);
       updateStats(allData);
     }
 
-    function fetchData() {
+    // ============================================================
+    // FETCH DATA (JSONP)
+    // ============================================================
+    function fetchData(forceRefresh = false) {
+      if (!forceRefresh) {
+        const cached = loadCache();
+        if (cached) {
+          console.log("[Renstra] Cache hit — menggunakan data tersimpan.");
+          processAndRender(cached);
+          return;
+        }
+      }
+
       document.getElementById("main-content").innerHTML =
         `<div class="loading-overlay"><div class="spinner"></div><span>Memuat data Renstra...</span></div>`;
 
       const script = document.createElement("script");
-      script.id = "jsonp-script";
+      script.id  = "jsonp-script";
       script.src = `${GAS_URL}?callback=handleDataRenstra&_=${Date.now()}`;
       script.onerror = () => {
         document.getElementById("main-content").innerHTML =
-          `<div class="error-box">⚠️ Gagal menghubungi API. Pastikan GAS sudah di-deploy ulang dan URL sudah diperbarui di konfigurasi.</div>`;
+          `<div class="error-box">⚠️ Gagal menghubungi API. Pastikan GAS sudah di-deploy ulang.</div>`;
       };
       document.body.appendChild(script);
     }
@@ -978,6 +1265,12 @@
       document.getElementById("filter-payung").value = "";
       renderDashboard(allData);
       updateStats(allData);
+    });
+
+    // Tombol Reset double-click → paksa refresh dari GAS (hapus cache)
+    document.getElementById("btn-reset").addEventListener("dblclick", () => {
+      clearCache();
+      fetchData(true);
     });
 
     // ============================================================
