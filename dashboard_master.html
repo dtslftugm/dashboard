@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Renstra DTSL</title>
+  <meta name="description"
+    content="Dashboard monitoring data pendukung Rencana Strategis Departemen Teknik Sipil dan Lingkungan UGM">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e8eaf6;
+      --text-muted: #8b92b3;
+      --radius: 14px;
+
+      --pendidikan: #6366f1;
+      --pendidikan-bg: rgba(99, 102, 241, 0.12);
+      --penelitian: #a855f7;
+      --penelitian-bg: rgba(168, 85, 247, 0.12);
+      --pkm: #10b981;
+      --pkm-bg: rgba(16, 185, 129, 0.12);
+      --sdm: #f59e0b;
+      --sdm-bg: rgba(245, 158, 11, 0.12);
+      --ekosistem: #06b6d4;
+      --ekosistem-bg: rgba(6, 182, 212, 0.12);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 20px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .header-title h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .header-title p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .filter-group label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-group select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .filter-group select:focus {
+      border-color: #6366f1;
+    }
+
+    .btn-reset {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-self: flex-end;
+      white-space: nowrap;
+    }
+
+    .btn-reset:hover {
+      border-color: #6366f1;
+      color: #6366f1;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      max-width: 1280px;
+      margin: 16px auto 0;
+      padding: 0 20px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-chip strong {
+      color: var(--text);
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* BIDANG SECTION */
+    .bidang-section {
+      margin-bottom: 32px;
+    }
+
+    .bidang-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bidang-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .bidang-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .bidang-count {
+      background: var(--surface2);
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* INDIKATOR GROUP */
+    .indikator-group {
+      margin-bottom: 20px;
+    }
+
+    .indikator-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    /* CARDS GRID */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Warna accent per bidang */
+    .card.bidang-pendidikan::before {
+      background: var(--pendidikan);
+    }
+
+    .card.bidang-pendidikan:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+    }
+
+    .card.bidang-penelitian::before {
+      background: var(--penelitian);
+    }
+
+    .card.bidang-penelitian:hover {
+      border-color: rgba(168, 85, 247, 0.35);
+    }
+
+    .card.bidang-pkm::before {
+      background: var(--pkm);
+    }
+
+    .card.bidang-pkm:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .card.bidang-sdm::before {
+      background: var(--sdm);
+    }
+
+    .card.bidang-sdm:hover {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .card.bidang-ekosistem::before {
+      background: var(--ekosistem);
+    }
+
+    .card.bidang-ekosistem:hover {
+      border-color: rgba(6, 182, 212, 0.35);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card-id {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border-radius: 4px;
+      padding: 2px 6px;
+      flex-shrink: 0;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-payung {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .badge-aksi {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+    }
+
+    .badge-p1 {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+
+    .badge-p2 {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+    }
+
+    .badge-p3 {
+      background: rgba(107, 114, 128, 0.2);
+      color: #9ca3af;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    /* VALUE BOX */
+    .card-value-box {
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .card-value {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .card-satuan {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.7;
+    }
+
+    .card-value-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+
+    /* Warna value box per bidang */
+    .card.bidang-pendidikan .card-value-box {
+      background: var(--pendidikan-bg);
+      color: #a5b4fc;
+    }
+
+    .card.bidang-penelitian .card-value-box {
+      background: var(--penelitian-bg);
+      color: #d8b4fe;
+    }
+
+    .card.bidang-pkm .card-value-box {
+      background: var(--pkm-bg);
+      color: #6ee7b7;
+    }
+
+    .card.bidang-sdm .card-value-box {
+      background: var(--sdm-bg);
+      color: #fcd34d;
+    }
+
+    .card.bidang-ekosistem .card-value-box {
+      background: var(--ekosistem-bg);
+      color: #67e8f9;
+    }
+
+    /* META ROW */
+    .card-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      background: var(--surface2);
+      border-radius: 6px;
+      padding: 5px 8px;
+      flex: 1;
+      min-width: 60px;
+    }
+
+    .meta-label {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+
+    .meta-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 1px;
+    }
+
+    /* LOADING */
+    .loading-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      gap: 16px;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* EMPTY */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .empty-state .emoji {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    /* ERROR */
+    .error-box {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 16px 20px;
+      color: #fca5a5;
+      font-size: 13px;
+      margin: 20px;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface2);
+      border-radius: 3px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .header {
+        padding: 14px 16px 12px;
+      }
+
+      .header-title h1 {
+        font-size: 15px;
+      }
+
+      .filters {
+        gap: 8px;
+      }
+
+      .filter-group {
+        min-width: 140px;
+      }
+
+      .main {
+        padding: 14px 12px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .card-value {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-top">
+        <div class="logo-badge">📊</div>
+        <div class="header-title">
+          <h1>Dashboard Renstra DTSL</h1>
+          <p>Departemen Teknik Sipil &amp; Lingkungan – Universitas Gadjah Mada</p>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="filter-group">
+          <label for="filter-bidang">Bidang</label>
+          <select id="filter-bidang">
+            <option value="">— Semua Bidang —</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-payung">Program Payung</label>
+          <select id="filter-payung">
+            <option value="">— Semua Program —</option>
+          </select>
+        </div>
+        <button class="btn-reset" id="btn-reset">↺ Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="stats-bar" id="stats-bar"></div>
+
+  <main class="main" id="main-content">
+    <div class="loading-overlay" id="loading">
+      <div class="spinner"></div>
+      <span>Memuat data Renstra...</span>
+    </div>
+  </main>
+
+  <script>
+    // ============================================================
+    // KONFIGURASI
+    // ============================================================
+    // Isi dengan URL GAS Web App baru setelah deploy code_renstra_master.gs
+    // (bukan URL lama — URL lama adalah child untuk detail per kategori)
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let allData = [];
+    let bidangList = [];
+    let programPayungList = [];
+
+    // ============================================================
+    // UTILS
+    // ============================================================
+    function bidangKey(b) {
+      if (!b) return "other";
+      const s = b.toLowerCase();
+      if (s.includes("pendidikan")) return "pendidikan";
+      if (s.includes("penelitian")) return "penelitian";
+      if (s.includes("pkm") || s.includes("pengabdian")) return "pkm";
+      if (s.includes("sdm")) return "sdm";
+      if (s.includes("ekosistem") || s.includes("berkelanjutan")) return "ekosistem";
+      return "other";
+    }
+
+    function bidangColor(b) {
+      const k = bidangKey(b);
+      const map = {
+        pendidikan: "#6366f1",
+        penelitian: "#a855f7",
+        pkm: "#10b981",
+        sdm: "#f59e0b",
+        ekosistem: "#06b6d4",
+        other: "#8b92b3"
+      };
+      return map[k] || map.other;
+    }
+
+    function formatValue(v) {
+      // null atau string kosong → N/A (membedakan dari nilai 0)
+      if (v === null || v === undefined || v === "") return "N/A";
+      if (typeof v === "number") {
+        return Number.isInteger(v)
+          ? v.toLocaleString("id-ID")
+          : v.toLocaleString("id-ID", { maximumFractionDigits: 2 });
+      }
+      return String(v);
+    }
+
+    function escHtml(s) {
+      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
+    function renderDashboard(data) {
+      const container = document.getElementById("main-content");
+
+      if (!data || data.length === 0) {
+        container.innerHTML = `<div class="empty-state"><div class="emoji">🔍</div><p>Tidak ada data yang sesuai filter.</p></div>`;
+        return;
+      }
+
+      // Kelompokkan per Bidang → per Indikator
+      const grouped = {};
+      data.forEach(item => {
+        const b = item.bidang || "Lainnya";
+        const ind = item.indikator || "Umum";
+        if (!grouped[b]) grouped[b] = {};
+        if (!grouped[b][ind]) grouped[b][ind] = [];
+        grouped[b][ind].push(item);
+      });
+
+      let html = "";
+      const bidangOrder = ["Pendidikan", "Penelitian", "PkM", "SDM", "Ekosistem Berkelanjutan"];
+      const sortedBidang = Object.keys(grouped).sort((a, b) => {
+        const ia = bidangOrder.findIndex(x => a.toLowerCase().includes(x.toLowerCase()));
+        const ib = bidangOrder.findIndex(x => b.toLowerCase().includes(x.toLowerCase()));
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+
+      sortedBidang.forEach(bidang => {
+        const key = bidangKey(bidang);
+        const color = bidangColor(bidang);
+        const indikators = grouped[bidang];
+        const totalCards = Object.values(indikators).reduce((s, arr) => s + arr.length, 0);
+
+        html += `<section class="bidang-section">
+      <div class="bidang-header">
+        <div class="bidang-dot" style="background:${color}"></div>
+        <h2>${escHtml(bidang)}</h2>
+        <span class="bidang-count">${totalCards} program</span>
+      </div>`;
+
+        Object.entries(indikators).forEach(([indikator, items]) => {
+          html += `<div class="indikator-group">
+        <div class="indikator-header">📌 ${escHtml(indikator)}</div>
+        <div class="cards-grid">`;
+
+          items.forEach(item => {
+            const cls = `bidang-${key}`;
+            const levelBadge = item.level === "Payung" ? `<span class="badge badge-payung">Payung</span>` : `<span class="badge badge-aksi">Aksi</span>`;
+            const priBadge = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
+
+            // VALUE: tampilkan apa adanya; null/empty → "N/A"
+            // Target 2026 hanya ditampilkan di meta row sebagai referensi
+            const displayValue = item.value;
+            const valueLabel = "Realisasi (VALUE)";
+
+            const baseline = item.baseline2025 !== null ? formatValue(item.baseline2025) : "—";
+            const target26 = item.target2026 !== null ? formatValue(item.target2026) : "—";
+
+            html += `<div class="card ${cls}">
+          <div class="card-top">
+            <span class="card-id">${escHtml(item.id)}</span>
+            <div class="card-badges">${levelBadge}${priBadge}</div>
+          </div>
+          <div class="card-title">${escHtml(item.program)}</div>
+          <div class="card-value-box">
+            <div>
+              <div class="card-value-label">${valueLabel}</div>
+              <div style="display:flex;align-items:baseline;gap:5px">
+                <span class="card-value">${formatValue(displayValue)}</span>
+                <span class="card-satuan">${escHtml(item.satuan)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-label">Baseline '25</div>
+              <div class="meta-val">${baseline}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Target '26</div>
+              <div class="meta-val">${target26}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Target '30</div>
+              <div class="meta-val">${item.target2030 !== null ? formatValue(item.target2030) : "—"}</div>
+            </div>
+          </div>
+        </div>`;
+          });
+
+          html += `</div></div>`;
+        });
+
+        html += `</section>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // ============================================================
+    // FILTER
+    // ============================================================
+    function applyFilter() {
+      const selBidang = document.getElementById("filter-bidang").value;
+      const selPayung = document.getElementById("filter-payung").value;
+
+      let filtered = allData;
+      if (selBidang) filtered = filtered.filter(d => d.bidang === selBidang);
+      if (selPayung) filtered = filtered.filter(d => d.programPayung === selPayung);
+
+      renderDashboard(filtered);
+      updateStats(filtered);
+
+      // Update program payung dropdown berdasarkan bidang terpilih
+      updatePayungOptions(selBidang, selPayung);
+    }
+
+    function updatePayungOptions(selBidang, keepVal) {
+      const src = selBidang ? allData.filter(d => d.bidang === selBidang) : allData;
+      const payungSet = {};
+      src.forEach(d => { if (d.programPayung) payungSet[d.programPayung] = true; });
+
+      const sel = document.getElementById("filter-payung");
+      const cur = keepVal || sel.value;
+      sel.innerHTML = `<option value="">— Semua Program —</option>`;
+      Object.keys(payungSet).sort().forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p.length > 55 ? p.substring(0, 55) + "…" : p;
+        if (p === cur) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
+    function updateStats(data) {
+      const bar = document.getElementById("stats-bar");
+      const total = data.length;
+      const payungCount = data.filter(d => d.level === "Payung").length;
+      const aksiCount = data.filter(d => d.level === "Aksi").length;
+      bar.innerHTML = `
+    <div class="stat-chip">Total: <strong>${total} Program</strong></div>
+    <div class="stat-chip">Payung: <strong>${payungCount}</strong></div>
+    <div class="stat-chip">Aksi: <strong>${aksiCount}</strong></div>
+  `;
+    }
+
+    // ============================================================
+    // FETCH DATA (JSONP)
+    // ============================================================
+    function handleDataRenstra(payload) {
+      const old = document.getElementById("jsonp-script");
+      if (old) old.remove();
+
+      if (payload.error) {
+        document.getElementById("main-content").innerHTML =
+          `<div class="error-box">⚠️ Error dari API: ${escHtml(payload.error)}</div>`;
+        return;
+      }
+
+      allData = payload.data || [];
+      bidangList = payload.bidangList || [];
+      programPayungList = payload.programPayungList || [];
+
+      // Isi dropdown Bidang
+      const selBidang = document.getElementById("filter-bidang");
+      bidangList.sort().forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b; opt.textContent = b;
+        selBidang.appendChild(opt);
+      });
+
+      // Isi dropdown Program Payung
+      updatePayungOptions("", "");
+
+      renderDashboard(allData);
+      updateStats(allData);
+    }
+
+    function fetchData() {
+      document.getElementById("main-content").innerHTML =
+        `<div class="loading-overlay"><div class="spinner"></div><span>Memuat data Renstra...</span></div>`;
+
+      const script = document.createElement("script");
+      script.id = "jsonp-script";
+      script.src = `${GAS_URL}?callback=handleDataRenstra&_=${Date.now()}`;
+      script.onerror = () => {
+        document.getElementById("main-content").innerHTML =
+          `<div class="error-box">⚠️ Gagal menghubungi API. Pastikan GAS sudah di-deploy ulang dan URL sudah diperbarui di konfigurasi.</div>`;
+      };
+      document.body.appendChild(script);
+    }
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+    document.getElementById("filter-bidang").addEventListener("change", applyFilter);
+    document.getElementById("filter-payung").addEventListener("change", applyFilter);
+    document.getElementById("btn-reset").addEventListener("click", () => {
+      document.getElementById("filter-bidang").value = "";
+      updatePayungOptions("", "");
+      document.getElementById("filter-payung").value = "";
+      renderDashboard(allData);
+      updateStats(allData);
+    });
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    fetchData();
+  </script>
+</body>
+
+</html>
