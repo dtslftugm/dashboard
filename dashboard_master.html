@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Renstra DTSL</title>
   <meta name="description"
-    content="Dashboard monitoring data pendukung Rencana Strategis Departemen Teknik Sipil dan Lingkungan UGM">
+    content="Dashboard monitoring data pendukung Rencana Strategis Departemen Teknik Sipil dan Lingkungan FT UGM">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -19,14 +19,18 @@
     }
 
     :root {
-      /* Default Light Theme */
-      --bg: #f8fafc;
+      /* Default Light Theme (Matches dtsl.vercel.app) */
+      --bg: #f9fafb; /* gray-50 */
       --surface: #ffffff;
-      --surface2: #f1f5f9;
-      --border: rgba(0, 0, 0, 0.08);
-      --text: #0f172a;
-      --text-muted: #64748b;
+      --surface2: #f3f4f6; /* gray-100 */
+      --border: #e5e7eb; /* gray-200 */
+      --text: #1f2937; /* gray-800 */
+      --text-muted: #6b7280; /* gray-500 */
       --radius: 14px;
+
+      --header-bg: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%); /* blue-900 to blue-700 */
+      --header-text: #ffffff;
+      --header-text-muted: #bfdbfe; /* blue-200 */
 
       --pendidikan: #4f46e5;
       --pendidikan-bg: rgba(79, 70, 229, 0.1);
@@ -47,6 +51,10 @@
       --border: rgba(255, 255, 255, 0.08);
       --text: #e8eaf6;
       --text-muted: #8b92b3;
+
+      --header-bg: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+      --header-text: #e8eaf6;
+      --header-text-muted: #8b92b3;
 
       --pendidikan: #6366f1;
       --pendidikan-bg: rgba(99, 102, 241, 0.12);
@@ -69,13 +77,15 @@
 
     /* HEADER */
     .header {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+      background: var(--header-bg);
       border-bottom: 1px solid var(--border);
+      color: var(--header-text);
       padding: 20px 20px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(12px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
     .header-inner {
@@ -114,9 +124,9 @@
     }
 
     .theme-toggle {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--header-text);
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -130,18 +140,19 @@
 
     .theme-toggle:hover {
       transform: scale(1.05);
-      border-color: #6366f1;
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .header-title h1 {
       font-size: 18px;
       font-weight: 800;
       letter-spacing: -0.3px;
+      color: var(--header-text);
     }
 
     .header-title p {
       font-size: 11px;
-      color: var(--text-muted);
+      color: var(--header-text-muted);
       margin-top: 1px;
     }
 
