@@ -1451,7 +1451,7 @@
       }
 
       // ── Jadwal & Realisasi Q chips (tahun berjalan) ──
-      const qLabels = ["Genap", "Gasal", "Q3", "Q4"];
+      const qLabels = ["Genap", "Gasal"];
       const jadwalQ = item.jadwal.slice(yrOff, yrOff + 4);
       const realQ = item.pelaksanaan.slice(yrOff, yrOff + 4);
       const jadwalChips = qLabels.map((lbl, i) =>
