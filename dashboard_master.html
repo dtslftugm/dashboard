@@ -170,8 +170,9 @@
       border-radius: var(--radius);
       padding: 16px;
       margin-top: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
+
     .filter-top {
       display: flex;
       flex-wrap: wrap;
@@ -179,16 +180,19 @@
       gap: 16px;
       margin-bottom: 12px;
     }
+
     .filter-group-inline {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+
     .filter-label {
       font-size: 11px;
       font-weight: 600;
       color: var(--text-muted);
     }
+
     .filter-chips {
       display: flex;
       gap: 4px;
@@ -197,6 +201,7 @@
       border-radius: 8px;
       border: 1px solid var(--border);
     }
+
     .f-chip {
       background: transparent;
       border: none;
@@ -208,19 +213,23 @@
       cursor: pointer;
       transition: all 0.2s;
     }
+
     .f-chip:hover {
       background: rgba(99, 102, 241, 0.1);
       color: #6366f1;
     }
+
     .f-chip.active {
       background: #3b82f6;
       color: #fff;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
+
     .search-box {
       flex: 1;
       min-width: 200px;
     }
+
     .search-box input {
       width: 100%;
       padding: 6px 12px;
@@ -233,14 +242,17 @@
       outline: none;
       transition: border-color 0.2s;
     }
+
     .search-box input:focus {
       border-color: #3b82f6;
     }
+
     .program-count {
       font-size: 11px;
       color: var(--text-muted);
       font-weight: 500;
     }
+
     .btn-lanjutan {
       background: rgba(59, 130, 246, 0.1);
       color: #3b82f6;
@@ -255,9 +267,11 @@
       gap: 4px;
       transition: all 0.2s;
     }
+
     .btn-lanjutan:hover {
       background: rgba(59, 130, 246, 0.2);
     }
+
     .filter-lanjutan-panel {
       display: none;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -266,14 +280,17 @@
       margin-top: 12px;
       border-top: 1px solid var(--border);
     }
+
     .filter-lanjutan-panel.open {
       display: grid;
     }
+
     .filter-group {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+
     .filter-group select {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -285,7 +302,7 @@
       outline: none;
       cursor: pointer;
     }
-    
+
     /* GRID HEADER */
     .grid-header-wrap {
       display: flex;
@@ -295,10 +312,12 @@
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
+
     .grid-header-wrap h2 {
       font-size: 16px;
       font-weight: 700;
     }
+
     .grid-target-info {
       font-size: 11px;
       color: var(--text-muted);
@@ -670,145 +689,428 @@
     }
 
     /* SCROLLBAR */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface2);
+      border-radius: 3px;
+    }
 
     /* ── PCT BADGE (pojok kanan atas card) ── */
     .pct-badge {
-      font-size: 9px; font-weight: 700; padding: 2px 8px;
-      border-radius: 20px; background: var(--surface2);
-      color: var(--text-muted); white-space: nowrap;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      white-space: nowrap;
     }
-    .pct-badge.pct-full { background: rgba(16,185,129,.15); color: #10b981; }
-    .pct-badge.pct-partial { background: rgba(245,158,11,.15); color: var(--sdm); }
-    .pct-badge.pct-zero { background: var(--surface2); color: var(--text-muted); }
+
+    .pct-badge.pct-full {
+      background: rgba(16, 185, 129, .15);
+      color: #10b981;
+    }
+
+    .pct-badge.pct-partial {
+      background: rgba(245, 158, 11, .15);
+      color: var(--sdm);
+    }
+
+    .pct-badge.pct-zero {
+      background: var(--surface2);
+      color: var(--text-muted);
+    }
 
     /* ── TIPE TARGET BADGE ── */
-    .badge-kumulatif { background: rgba(6,182,212,.15); color: var(--ekosistem); }
-    .badge-inkremental { background: rgba(16,185,129,.15); color: var(--pkm); }
-    .badge-tipe { background: var(--surface2); color: var(--text-muted); }
+    .badge-kumulatif {
+      background: rgba(6, 182, 212, .15);
+      color: var(--ekosistem);
+    }
+
+    .badge-inkremental {
+      background: rgba(16, 185, 129, .15);
+      color: var(--pkm);
+    }
+
+    .badge-tipe {
+      background: var(--surface2);
+      color: var(--text-muted);
+    }
 
     /* ── CARD SUBTITLE & INDIKATOR ── */
     .card-program-payung {
-      font-size: 11px; color: var(--text-muted);
-      margin-bottom: 1px; overflow: hidden;
-      text-overflow: ellipsis; white-space: nowrap;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 1px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+
     .card-indikator-kinerja {
-      font-size: 10px; color: var(--text-muted);
-      font-style: italic; margin-bottom: 10px;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 10px;
     }
-    .card-indikator-kinerja span { font-weight: 600; font-style: normal; }
+
+    .card-indikator-kinerja span {
+      font-weight: 600;
+      font-style: normal;
+    }
 
     /* ── KPI BOX (Baseline → Target → Ultimate) ── */
     .card-kpi {
-      border-radius: 10px; padding: 10px 12px; margin-bottom: 6px;
-      display: flex; align-items: flex-start; gap: 8px;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
     }
-    .kpi-box { flex: 1; min-width: 0; }
+
+    .kpi-box {
+      flex: 1;
+      min-width: 0;
+    }
+
     .kpi-label {
-      font-size: 8px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .4px; opacity: .65; margin-bottom: 2px;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      opacity: .65;
+      margin-bottom: 2px;
     }
-    .kpi-value { font-size: 20px; font-weight: 800; letter-spacing: -.5px; line-height: 1.1; }
-    .kpi-unit  { font-size: 9.5px; font-weight: 500; opacity: .7; line-height: 1.4; }
-    .kpi-arrow { display: flex; align-items: center; font-size: 13px; opacity: .45; flex-shrink: 0; padding-top: 12px; }
-    .kpi-ultimate { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
-    .kpi-ultimate .kpi-value { font-size: 17px; }
+
+    .kpi-value {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      line-height: 1.1;
+    }
+
+    .kpi-unit {
+      font-size: 9.5px;
+      font-weight: 500;
+      opacity: .7;
+      line-height: 1.4;
+    }
+
+    .kpi-arrow {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      opacity: .45;
+      flex-shrink: 0;
+      padding-top: 12px;
+    }
+
+    .kpi-ultimate {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .kpi-ultimate .kpi-value {
+      font-size: 17px;
+    }
 
     /* Warna KPI box per bidang — harus setelah card bidang rules */
-    .card.bidang-pendidikan .card-kpi { background: var(--pendidikan-bg); color: var(--pendidikan); }
-    .card.bidang-penelitian .card-kpi { background: var(--penelitian-bg); color: var(--penelitian); }
-    .card.bidang-pkm       .card-kpi { background: var(--pkm-bg);        color: var(--pkm); }
-    .card.bidang-sdm       .card-kpi { background: var(--sdm-bg);        color: var(--sdm); }
-    .card.bidang-ekosistem .card-kpi { background: var(--ekosistem-bg);  color: var(--ekosistem); }
+    .card.bidang-pendidikan .card-kpi {
+      background: var(--pendidikan-bg);
+      color: var(--pendidikan);
+    }
+
+    .card.bidang-penelitian .card-kpi {
+      background: var(--penelitian-bg);
+      color: var(--penelitian);
+    }
+
+    .card.bidang-pkm .card-kpi {
+      background: var(--pkm-bg);
+      color: var(--pkm);
+    }
+
+    .card.bidang-sdm .card-kpi {
+      background: var(--sdm-bg);
+      color: var(--sdm);
+    }
+
+    .card.bidang-ekosistem .card-kpi {
+      background: var(--ekosistem-bg);
+      color: var(--ekosistem);
+    }
 
     /* ── PROGRESS BAR ── */
     .card-progress {
-      height: 3px; background: rgba(0,0,0,.08);
-      border-radius: 2px; margin-bottom: 10px; overflow: hidden;
+      height: 3px;
+      background: rgba(0, 0, 0, .08);
+      border-radius: 2px;
+      margin-bottom: 10px;
+      overflow: hidden;
     }
-    [data-theme="dark"] .card-progress { background: rgba(255,255,255,.08); }
-    .card-progress-fill { height: 100%; border-radius: 2px; transition: width .6s ease; }
-    .card.bidang-pendidikan .card-progress-fill { background: var(--pendidikan); }
-    .card.bidang-penelitian .card-progress-fill { background: var(--penelitian); }
-    .card.bidang-pkm        .card-progress-fill { background: var(--pkm); }
-    .card.bidang-sdm        .card-progress-fill { background: var(--sdm); }
-    .card.bidang-ekosistem  .card-progress-fill { background: var(--ekosistem); }
+
+    [data-theme="dark"] .card-progress {
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .card-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width .6s ease;
+    }
+
+    .card.bidang-pendidikan .card-progress-fill {
+      background: var(--pendidikan);
+    }
+
+    .card.bidang-penelitian .card-progress-fill {
+      background: var(--penelitian);
+    }
+
+    .card.bidang-pkm .card-progress-fill {
+      background: var(--pkm);
+    }
+
+    .card.bidang-sdm .card-progress-fill {
+      background: var(--sdm);
+    }
+
+    .card.bidang-ekosistem .card-progress-fill {
+      background: var(--ekosistem);
+    }
 
     /* ── JADWAL / REALISASI ── */
-    .card-schedule { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-    .schedule-row  { display: flex; align-items: center; gap: 5px; }
-    .schedule-label {
-      font-size: 9px; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: .3px; width: 52px; flex-shrink: 0;
+    .card-schedule {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 10px;
     }
-    .schedule-chips { display: flex; gap: 4px; }
+
+    .schedule-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .schedule-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      width: 52px;
+      flex-shrink: 0;
+    }
+
+    .schedule-chips {
+      display: flex;
+      gap: 4px;
+    }
+
     .q-chip {
-      width: 27px; height: 22px; border-radius: 5px;
-      font-size: 9px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--surface2); color: var(--text-muted);
+      width: 27px;
+      height: 22px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface2);
+      color: var(--text-muted);
       border: 1px solid var(--border);
     }
-    .q-chip.scheduled { background: #3b82f6; color: #fff; border-color: #3b82f6; }
-    .q-chip.realized  { background: #f97316; color: #fff; border-color: #f97316; }
-    .q-chip.realized-check { background: #10b981; color: #fff; border-color: #10b981; font-size: 12px; }
+
+    .q-chip.scheduled {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+
+    .q-chip.realized {
+      background: #f97316;
+      color: #fff;
+      border-color: #f97316;
+    }
+
+    .q-chip.realized-check {
+      background: #10b981;
+      color: #fff;
+      border-color: #10b981;
+      font-size: 12px;
+    }
 
     /* ── SUMBER GAP ── */
-    .card-sumber { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
-    .sumber-label {
-      font-size: 9px; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0;
+    .card-sumber {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
     }
+
+    .sumber-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      flex-shrink: 0;
+    }
+
     .sumber-chip {
-      font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 12px;
-      background: rgba(99,102,241,.1); color: #6366f1; border: 1px solid rgba(99,102,241,.2);
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(99, 102, 241, .1);
+      color: #6366f1;
+      border: 1px solid rgba(99, 102, 241, .2);
     }
 
     /* ── RASCE / PIC ── */
-    .card-rasce { display: flex; align-items: flex-start; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+    .card-rasce {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
     .rasce-label {
-      font-size: 9px; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0; margin-top: 2px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
+
     .rasce-chip {
-      display: flex; align-items: center; gap: 3px;
-      font-size: 9px; font-weight: 600; padding: 2px 6px 2px 3px;
-      border-radius: 12px; background: var(--surface2);
-      color: var(--text); border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px 2px 3px;
+      border-radius: 12px;
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
     }
+
     .rasce-role {
-      font-size: 8px; font-weight: 800;
-      width: 14px; height: 14px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 8px;
+      font-weight: 800;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .role-A { background: #3b82f6; color: #fff; }
-    .role-S { background: #10b981; color: #fff; }
-    .role-R { background: #f97316; color: #fff; }
-    .role-E { background: #a855f7; color: #fff; }
-    .role-C { background: #06b6d4; color: #fff; }
-    .rasce-more { font-size: 9px; color: var(--text-muted); font-weight: 600; padding: 2px 4px; align-self: center; }
+
+    .role-A {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .role-S {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .role-R {
+      background: #f97316;
+      color: #fff;
+    }
+
+    .role-E {
+      background: #a855f7;
+      color: #fff;
+    }
+
+    .role-C {
+      background: #06b6d4;
+      color: #fff;
+    }
+
+    .rasce-more {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 2px 4px;
+      align-self: center;
+    }
 
     /* ── CARD FOOTER ── */
     .card-footer-info {
-      border-top: 1px solid var(--border); padding-top: 8px;
-      margin-top: 4px; display: flex; flex-direction: column; gap: 3px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
-    .footer-row { font-size: 10px; color: var(--text-muted); line-height: 1.45; }
-    .footer-row strong { color: var(--text); font-weight: 700; }
-    .footer-row em { font-style: italic; }
+
+    .footer-row {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .footer-row strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .footer-row em {
+      font-style: italic;
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      .header { padding: 14px 16px 12px; }
-      .header-title h1 { font-size: 15px; }
-      .filters { gap: 8px; }
-      .filter-group { min-width: 140px; }
-      .main { padding: 14px 12px; }
-      .cards-grid { grid-template-columns: 1fr; gap: 10px; }
-      .kpi-value { font-size: 17px; }
+      .header {
+        padding: 14px 16px 12px;
+      }
+
+      .header-title h1 {
+        font-size: 15px;
+      }
+
+      .filters {
+        gap: 8px;
+      }
+
+      .filter-group {
+        min-width: 140px;
+      }
+
+      .main {
+        padding: 14px 12px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .kpi-value {
+        font-size: 17px;
+      }
     }
   </style>
 </head>
@@ -843,7 +1145,7 @@
               <button class="f-chip" data-val="2030">2030</button>
             </div>
           </div>
-          
+
           <div class="filter-group-inline">
             <span class="filter-label">Level:</span>
             <div class="filter-chips" id="filter-level">
@@ -852,7 +1154,7 @@
               <button class="f-chip" data-val="Aksi">Aksi</button>
             </div>
           </div>
-          
+
           <div class="filter-group-inline">
             <span class="filter-label">Prioritas:</span>
             <div class="filter-chips" id="filter-prioritas">
@@ -862,32 +1164,40 @@
               <button class="f-chip" data-val="3">P3</button>
             </div>
           </div>
-          
+
           <div class="search-box">
             <input type="text" id="filter-search" placeholder="Cari program, gap, indikator...">
           </div>
-          
+
           <div class="program-count" id="program-count">0 / 0 program</div>
         </div>
-        
-        <button class="btn-lanjutan" id="btn-lanjutan">Filter Lanjutan ▲</button>
-        
+
+        <button class="btn-lanjutan" id="btn-lanjutan">Filter Lanjutan ▼</button>
+
         <div class="filter-lanjutan-panel" id="filter-lanjutan-panel">
           <div class="filter-group">
             <span class="filter-label">Bidang:</span>
-            <select id="filter-bidang"><option value="">Semua Bidang</option></select>
+            <select id="filter-bidang">
+              <option value="">Semua Bidang</option>
+            </select>
           </div>
           <div class="filter-group">
             <span class="filter-label">Program Payung:</span>
-            <select id="filter-payung"><option value="">Semua Program Payung</option></select>
+            <select id="filter-payung">
+              <option value="">Semua Program Payung</option>
+            </select>
           </div>
           <div class="filter-group">
             <span class="filter-label">PIC:</span>
-            <select id="filter-pic"><option value="">Semua PIC</option></select>
+            <select id="filter-pic">
+              <option value="">Semua PIC</option>
+            </select>
           </div>
           <div class="filter-group">
             <span class="filter-label">Sumber Gap:</span>
-            <select id="filter-sumber"><option value="">Semua Sumber Gap</option></select>
+            <select id="filter-sumber">
+              <option value="">Semua Sumber Gap</option>
+            </select>
           </div>
         </div>
       </div>
@@ -906,32 +1216,32 @@
     // KONFIGURASI
     // ============================================================
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
-    const CACHE_KEY  = "renstra_raw_v3";
-    const CACHE_TTL  = 30 * 60 * 1000; // 30 menit
-    const BASE_YEAR  = 2026;
+    const CACHE_KEY = "renstra_raw_v3";
+    const CACHE_TTL = 30 * 60 * 1000; // 30 menit
+    const BASE_YEAR = 2026;
 
     // Label PIC (singkat) untuk chip RASCE
     const PIC_LABELS = [
-      "PIC Kadep & Sekdep","PIC Dosen DTSL","PIC Tendik DTSL",
-      "PIC Tim SDM, Sarpras, & Keuangan","PIC Tim Kerjasama",
-      "PIC Tim Akademik","PIC Tim Jaminan Mutu",
-      "PIC Prodi TS","PIC Prodi TIL","PIC Prodi TSDA",
-      "PIC Prodi MTS","PIC Prodi MSTT","PIC Prodi MTPBA",
-      "PIC Prodi Doktor TS","PIC Ketua KBK","PIC Task Force","PIC Lain-lain"
+      "PIC Kadep & Sekdep", "PIC Dosen DTSL", "PIC Tendik DTSL",
+      "PIC Tim SDM, Sarpras, & Keuangan", "PIC Tim Kerjasama",
+      "PIC Tim Akademik", "PIC Tim Jaminan Mutu",
+      "PIC Prodi TS", "PIC Prodi TIL", "PIC Prodi TSDA",
+      "PIC Prodi MTS", "PIC Prodi MSTT", "PIC Prodi MTPBA",
+      "PIC Prodi Doktor TS", "PIC Ketua KBK", "PIC Task Force", "PIC Lain-lain"
     ];
     const PIC_SHORT = [
-      "Kadep/Sekdep","Dosen DTSL","Tendik DTSL",
-      "Tim SDM/Sarpras","Tim Kerjasama","Tim Akademik","Tim JM",
-      "Prodi TS","Prodi TIL","Prodi TSDA",
-      "Prodi MTS","Prodi MSTT","Prodi MTPBA",
-      "Prodi Doktor TS","Ketua KBK","Task Force","Lain-lain"
+      "Kadep/Sekdep", "Dosen DTSL", "Tendik DTSL",
+      "Tim SDM/Sarpras", "Tim Kerjasama", "Tim Akademik", "Tim JM",
+      "Prodi TS", "Prodi TIL", "Prodi TSDA",
+      "Prodi MTS", "Prodi MSTT", "Prodi MTPBA",
+      "Prodi Doktor TS", "Ketua KBK", "Task Force", "Lain-lain"
     ];
 
     // ============================================================
     // THEME TOGGLE
     // ============================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const prefersDark    = window.matchMedia("(prefers-color-scheme: dark)");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
     function applyTheme(t) {
       document.documentElement.setAttribute("data-theme", t);
@@ -948,8 +1258,8 @@
     // STATE
     // ============================================================
     let allData = [];
-    let colMap  = {};
-    
+    let colMap = {};
+
     // Auto-detect year initially, clamp to 2026-2030
     let initialYear = new Date().getFullYear();
     if (initialYear < 2026) initialYear = 2026;
@@ -1009,36 +1319,36 @@
       })).filter(p => p.role !== "");
 
       // Anggaran & Sumber (5 tahun)
-      const anggaran      = [0,1,2,3,4].map(i => g(`Anggaran ${BASE_YEAR + i} (juta Rupiah)`) ?? g(`Anggaran ${BASE_YEAR + i}`));
-      const sumberAnggaran= [0,1,2,3,4].map(i => g(`Sumber anggaran ${BASE_YEAR + i} (% Sumber)`) ?? g(`Sumber anggaran ${BASE_YEAR + i}`));
+      const anggaran = [0, 1, 2, 3, 4].map(i => g(`Anggaran ${BASE_YEAR + i} (juta Rupiah)`) ?? g(`Anggaran ${BASE_YEAR + i}`));
+      const sumberAnggaran = [0, 1, 2, 3, 4].map(i => g(`Sumber anggaran ${BASE_YEAR + i} (% Sumber)`) ?? g(`Sumber anggaran ${BASE_YEAR + i}`));
 
       return {
-        no:             g("No"),
-        bidang:         norm(g("Bidang")),
-        gap:            norm(g("Gap")),
-        programPayung:  norm(g("Program Payung")),
-        id:             norm(g("ID")),
-        indikator:      norm(g("Indikator Kinerja (Key Performance)")),
-        sumberGap:      norm(g("Sumber Gap")),
-        program:        norm(g("Program (Aksi)")),
-        level:          norm(g("Level")),
-        priority:       g("Priority (1-3)"),
-        value:          g("VALUE"),
-        satuan:         norm(g("Satuan Output")),
-        namaDatabase:   norm(g("Nama Database")),
-        sheetUrl:       norm(g("Sheet")),
-        baseline2025:   g("Baseline (2025)"),
-        target2026:     g("Target 2026"),
-        target2027:     g("Target 2027"),
-        target2028:     g("Target 2028"),
-        target2029:     g("Target 2029"),
-        target2030:     g("Target 2030"),
-        ultimate:       g("Ultimate 2030"),
-        tipeTarget:     norm(g("Tipe Target")),
-        notePerubahan:  norm(g("Note Perubahan")),
-        remark:         norm(g("Remark")),
+        no: g("No"),
+        bidang: norm(g("Bidang")),
+        gap: norm(g("Gap")),
+        programPayung: norm(g("Program Payung")),
+        id: norm(g("ID")),
+        indikator: norm(g("Indikator Kinerja (Key Performance)")),
+        sumberGap: norm(g("Sumber Gap")),
+        program: norm(g("Program (Aksi)")),
+        level: norm(g("Level")),
+        priority: g("Priority (1-3)"),
+        value: g("VALUE"),
+        satuan: norm(g("Satuan Output")),
+        namaDatabase: norm(g("Nama Database")),
+        sheetUrl: norm(g("Sheet")),
+        baseline2025: g("Baseline (2025)"),
+        target2026: g("Target 2026"),
+        target2027: g("Target 2027"),
+        target2028: g("Target 2028"),
+        target2029: g("Target 2029"),
+        target2030: g("Target 2030"),
+        ultimate: g("Ultimate 2030"),
+        tipeTarget: norm(g("Tipe Target")),
+        notePerubahan: norm(g("Note Perubahan")),
+        remark: norm(g("Remark")),
         jadwal, rasce, pelaksanaan,
-        evaluasi:       norm(g("Evaluasi")),
+        evaluasi: norm(g("Evaluasi")),
         anggaran, sumberAnggaran
       };
     }
@@ -1085,7 +1395,7 @@
     }
 
     function bidangColor(b) {
-      return { pendidikan:"#6366f1", penelitian:"#a855f7", pkm:"#10b981", sdm:"#f59e0b", ekosistem:"#06b6d4", other:"#8b92b3" }[bidangKey(b)] || "#8b92b3";
+      return { pendidikan: "#6366f1", penelitian: "#a855f7", pkm: "#10b981", sdm: "#f59e0b", ekosistem: "#06b6d4", other: "#8b92b3" }[bidangKey(b)] || "#8b92b3";
     }
 
     function fv(v) {
@@ -1094,7 +1404,7 @@
       return String(v);
     }
 
-    function esc(s) { return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+    function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
     // ============================================================
     // CARD HTML BUILDER
@@ -1104,13 +1414,13 @@
       const pgPct = progressPct(item);
 
       // ── Badges baris atas ──
-      const priBadge   = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
-      const lvlBadge   = item.level === "Payung"
+      const priBadge = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
+      const lvlBadge = item.level === "Payung"
         ? `<span class="badge badge-payung">Payung</span>`
         : `<span class="badge badge-aksi">Aksi</span>`;
-      const tipeLower  = (item.tipeTarget || "").toLowerCase();
-      const tipeCls    = tipeLower.includes("kumulatif") ? "badge-kumulatif" : tipeLower.includes("inkrement") ? "badge-inkremental" : "badge-tipe";
-      const tipeBadge  = item.tipeTarget ? `<span class="badge ${tipeCls}">${esc(item.tipeTarget)}</span>` : "";
+      const tipeLower = (item.tipeTarget || "").toLowerCase();
+      const tipeCls = tipeLower.includes("kumulatif") ? "badge-kumulatif" : tipeLower.includes("inkrement") ? "badge-inkremental" : "badge-tipe";
+      const tipeBadge = item.tipeTarget ? `<span class="badge ${tipeCls}">${esc(item.tipeTarget)}</span>` : "";
 
       // ── Pct badge ──
       let pctHtml = "";
@@ -1132,7 +1442,7 @@
       if (item.rasce.length > 0) {
         const MAX_RASCE = 3;
         const shown = item.rasce.slice(0, MAX_RASCE);
-        const more  = item.rasce.length - MAX_RASCE;
+        const more = item.rasce.length - MAX_RASCE;
         const chips = shown.map(p =>
           `<span class="rasce-chip"><span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
         ).join("");
@@ -1141,9 +1451,9 @@
       }
 
       // ── Jadwal & Realisasi Q chips (tahun berjalan) ──
-      const qLabels = ["Q1","Q2","Q3","Q4"];
+      const qLabels = ["Q1", "Q2", "Q3", "Q4"];
       const jadwalQ = item.jadwal.slice(yrOff, yrOff + 4);
-      const realQ   = item.pelaksanaan.slice(yrOff, yrOff + 4);
+      const realQ = item.pelaksanaan.slice(yrOff, yrOff + 4);
       const jadwalChips = qLabels.map((lbl, i) =>
         `<span class="q-chip${isTruthy(jadwalQ[i]) ? " scheduled" : ""}">${lbl}</span>`
       ).join("");
@@ -1162,9 +1472,9 @@
 
       // ── Footer: Gap, Note, Remark ──
       let footerRows = "";
-      if (item.gap)           footerRows += `<div class="footer-row"><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
+      if (item.gap) footerRows += `<div class="footer-row"><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
       if (item.notePerubahan) footerRows += `<div class="footer-row"><strong>Note:</strong> ${esc(item.notePerubahan)}</div>`;
-      if (item.remark)        footerRows += `<div class="footer-row"><strong>Remark:</strong> ${esc(item.remark)}</div>`;
+      if (item.remark) footerRows += `<div class="footer-row"><strong>Remark:</strong> ${esc(item.remark)}</div>`;
       const footerHtml = footerRows ? `<div class="card-footer-info">${footerRows}</div>` : "";
 
       return `<div class="card ${bidangCls}">
@@ -1242,7 +1552,7 @@
     // ============================================================
     function applyFilter() {
       let filtered = allData;
-      
+
       if (filterState.level) {
         filtered = filtered.filter(d => d.level === filterState.level);
       }
@@ -1263,7 +1573,7 @@
       }
       if (filterState.search) {
         const s = filterState.search.toLowerCase();
-        filtered = filtered.filter(d => 
+        filtered = filtered.filter(d =>
           (d.program && d.program.toLowerCase().includes(s)) ||
           (d.indikator && d.indikator.toLowerCase().includes(s)) ||
           (d.gap && d.gap.toLowerCase().includes(s)) ||
@@ -1282,11 +1592,11 @@
       try {
         const c = JSON.parse(localStorage.getItem(CACHE_KEY));
         if (c && Date.now() - c.ts < CACHE_TTL) return c.raw;
-      } catch(e) {}
+      } catch (e) { }
       return null;
     }
     function saveCache(raw) {
-      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), raw })); } catch(e) {}
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), raw })); } catch (e) { }
     }
     function clearCache() { localStorage.removeItem(CACHE_KEY); }
 
@@ -1350,7 +1660,7 @@
 
       // Initialize UI for chips
       document.querySelectorAll('#filter-tahun .f-chip').forEach(btn => {
-        if(btn.dataset.val == filterState.tahun) btn.classList.add('active');
+        if (btn.dataset.val == filterState.tahun) btn.classList.add('active');
         else btn.classList.remove('active');
       });
 
@@ -1374,7 +1684,7 @@
         `<div class="loading-overlay"><div class="spinner"></div><span>Memuat data Renstra...</span></div>`;
 
       const script = document.createElement("script");
-      script.id  = "jsonp-script";
+      script.id = "jsonp-script";
       script.src = `${GAS_URL}?callback=handleDataRenstra&_=${Date.now()}`;
       script.onerror = () => {
         document.getElementById("main-content").innerHTML =
@@ -1395,7 +1705,7 @@
           e.target.classList.add("active");
           // Update state and re-filter
           filterState[stateKey] = e.target.dataset.val;
-          if(stateKey === 'tahun') filterState.tahun = parseInt(e.target.dataset.val);
+          if (stateKey === 'tahun') filterState.tahun = parseInt(e.target.dataset.val);
           applyFilter();
         }
       });
@@ -1422,9 +1732,9 @@
     btnLanjutan.addEventListener("click", () => {
       panelLanjutan.classList.toggle("open");
       if (panelLanjutan.classList.contains("open")) {
-        btnLanjutan.innerHTML = "Filter Lanjutan ▼";
-      } else {
         btnLanjutan.innerHTML = "Filter Lanjutan ▲";
+      } else {
+        btnLanjutan.innerHTML = "Filter Lanjutan ▼";
       }
     });
 
