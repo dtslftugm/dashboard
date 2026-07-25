@@ -378,13 +378,12 @@
       if (item.rasce.length > 0) {
         const MAX_RASCE = 3;
         const more = item.rasce.length - MAX_RASCE;
-        const uid = `rasce-${esc(item.id).replace(/\W/g, "_")}`;
         const allChips = item.rasce.map((p, idx) =>
-          `<span class="rasce-chip${idx >= MAX_RASCE ? " rasce-hidden" : ""}" data-rasce-group="${uid}">`
+          `<span class="rasce-chip${idx >= MAX_RASCE ? " rasce-hidden" : ""}">`
           + `<span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
         ).join("");
         const moreBtn = more > 0
-          ? `<span class="rasce-more" role="button" tabindex="0" data-rasce-target="${uid}" title="Tampilkan semua PIC">+${more} lagi</span>`
+          ? `<span class="rasce-more" role="button" tabindex="0" title="Tampilkan semua PIC">+${more} lagi</span>`
           : "";
         rasceHtml = `<div class="card-rasce"><span class="rasce-label">RASCE:</span>${allChips}${moreBtn}</div>`;
       }
@@ -703,10 +702,11 @@
     // RASCE EXPAND / COLLAPSE (event delegation)
     // ============================================================
     document.getElementById("main-content").addEventListener("click", function (e) {
-      const btn = e.target.closest("[data-rasce-target]");
+      const btn = e.target.closest(".rasce-more");
       if (!btn) return;
-      const uid = btn.getAttribute("data-rasce-target");
-      const chips = document.querySelectorAll(`.rasce-chip[data-rasce-group="${uid}"]`);
+      const container = btn.closest(".card-rasce");
+      if (!container) return;
+      const chips = container.querySelectorAll(".rasce-chip");
       const expanded = btn.dataset.expanded === "true";
       const MAX_RASCE = 3;
       if (expanded) {
@@ -725,7 +725,7 @@
     });
     document.getElementById("main-content").addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") {
-        const btn = e.target.closest("[data-rasce-target]");
+        const btn = e.target.closest(".rasce-more");
         if (btn) { e.preventDefault(); btn.click(); }
       }
     });
