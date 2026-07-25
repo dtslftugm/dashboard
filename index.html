@@ -706,17 +706,18 @@
       const btn = e.target.closest("[data-rasce-target]");
       if (!btn) return;
       const uid = btn.getAttribute("data-rasce-target");
-      const hiddenChips = document.querySelectorAll(`.rasce-chip[data-rasce-group="${uid}"].rasce-hidden`);
+      const chips = document.querySelectorAll(`.rasce-chip[data-rasce-group="${uid}"]`);
       const expanded = btn.dataset.expanded === "true";
+      const MAX_RASCE = 3;
       if (expanded) {
-        hiddenChips.forEach(c => c.classList.add("rasce-hidden"));
+        chips.forEach((c, idx) => {
+          if (idx >= MAX_RASCE) c.classList.add("rasce-hidden");
+        });
         btn.dataset.expanded = "false";
-        const total = document.querySelectorAll(`.rasce-chip[data-rasce-group="${uid}"]`).length;
-        const visible = document.querySelectorAll(`.rasce-chip[data-rasce-group="${uid}"]:not(.rasce-hidden)`).length;
-        btn.textContent = `+${total - visible} lagi`;
+        btn.textContent = `+${chips.length - MAX_RASCE} lagi`;
         btn.title = "Tampilkan semua PIC";
       } else {
-        hiddenChips.forEach(c => c.classList.remove("rasce-hidden"));
+        chips.forEach(c => c.classList.remove("rasce-hidden"));
         btn.dataset.expanded = "true";
         btn.textContent = "Sembunyikan";
         btn.title = "Sembunyikan PIC";
