@@ -701,36 +701,39 @@
     // ============================================================
     // RASCE EXPAND / COLLAPSE (event delegation)
     // ============================================================
-    document.getElementById("main-content").addEventListener("click", function (e) {
+    document.body.addEventListener("click", function (e) {
       const btn = e.target.closest(".rasce-more");
       if (!btn) return;
+      e.preventDefault();
+      
       const container = btn.closest(".card-rasce");
       if (!container) return;
+      
       const chips = container.querySelectorAll(".rasce-chip");
-      const expanded = btn.dataset.expanded === "true";
+      const isExpanded = btn.getAttribute("data-expanded") === "true";
       const MAX_RASCE = 3;
       
-      if (expanded) {
-        chips.forEach((c, idx) => {
-          if (idx >= MAX_RASCE) {
-            c.classList.add("rasce-hidden");
-            c.style.display = "none";
+      if (isExpanded) {
+        for (let i = 0; i < chips.length; i++) {
+          if (i >= MAX_RASCE) {
+            chips[i].classList.add("rasce-hidden");
+            chips[i].style.setProperty("display", "none", "important");
           }
-        });
-        btn.dataset.expanded = "false";
+        }
+        btn.setAttribute("data-expanded", "false");
         btn.textContent = `+${chips.length - MAX_RASCE} lagi`;
         btn.title = "Tampilkan semua PIC";
       } else {
-        chips.forEach(c => {
-          c.classList.remove("rasce-hidden");
-          c.style.display = "flex";
-        });
-        btn.dataset.expanded = "true";
+        for (let i = 0; i < chips.length; i++) {
+          chips[i].classList.remove("rasce-hidden");
+          chips[i].style.setProperty("display", "flex", "important");
+        }
+        btn.setAttribute("data-expanded", "true");
         btn.textContent = "Sembunyikan";
         btn.title = "Sembunyikan PIC";
       }
     });
-    document.getElementById("main-content").addEventListener("keydown", function (e) {
+    document.body.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") {
         const btn = e.target.closest(".rasce-more");
         if (btn) { e.preventDefault(); btn.click(); }
