@@ -379,7 +379,7 @@
         const MAX_RASCE = 3;
         const more = item.rasce.length - MAX_RASCE;
         const allChips = item.rasce.map((p, idx) =>
-          `<span class="rasce-chip${idx >= MAX_RASCE ? " rasce-hidden" : ""}">`
+          `<span class="rasce-chip${idx >= MAX_RASCE ? " rasce-hidden" : ""}"${idx >= MAX_RASCE ? ' style="display: none;"' : ''}>`
           + `<span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
         ).join("");
         const moreBtn = more > 0
@@ -709,15 +709,22 @@
       const chips = container.querySelectorAll(".rasce-chip");
       const expanded = btn.dataset.expanded === "true";
       const MAX_RASCE = 3;
+      
       if (expanded) {
         chips.forEach((c, idx) => {
-          if (idx >= MAX_RASCE) c.classList.add("rasce-hidden");
+          if (idx >= MAX_RASCE) {
+            c.classList.add("rasce-hidden");
+            c.style.display = "none";
+          }
         });
         btn.dataset.expanded = "false";
         btn.textContent = `+${chips.length - MAX_RASCE} lagi`;
         btn.title = "Tampilkan semua PIC";
       } else {
-        chips.forEach(c => c.classList.remove("rasce-hidden"));
+        chips.forEach(c => {
+          c.classList.remove("rasce-hidden");
+          c.style.display = "flex";
+        });
         btn.dataset.expanded = "true";
         btn.textContent = "Sembunyikan";
         btn.title = "Sembunyikan PIC";
