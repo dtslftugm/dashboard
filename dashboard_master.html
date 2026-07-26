@@ -27,7 +27,8 @@
           <p>Departemen Teknik Sipil &amp; Lingkungan – Universitas Gadjah Mada</p>
         </div>
         <div class="theme-controls">
-          <button id="btn-refresh-data" class="theme-toggle" title="Refresh Data dari Spreadsheet" aria-label="Refresh Data">
+          <button id="btn-refresh-data" class="theme-toggle" title="Refresh Data dari Spreadsheet"
+            aria-label="Refresh Data">
             🔄
           </button>
           <select id="palette-select" class="palette-select" title="Pilih Variasi Tema Palette">
@@ -294,9 +295,24 @@
     }
 
     // ── Persentase selesai (tahun berjalan) ──
+    // Logika: bandingkan JUMLAH NILAI realisasi vs jadwal (bukan jumlah slot)
+    // Contoh: Jadwal Genap=15, Gasal=5 → total=20; Realisasi Genap=15, Gasal=2 → total=17 → 17/20 = 85%
+    // Fallback ke hitung slot (boolean) jika nilai bukan numerik (misal: TRUE/v/✓)
     function hitungPersen(item, yrOff) {
       const jSlice = item.jadwal.slice(yrOff, yrOff + 2);
       const pSlice = item.pelaksanaan.slice(yrOff, yrOff + 2);
+
+      // Coba hitung berdasarkan nilai numerik
+      const jNums = jSlice.map(v => parseFloat(v)).filter(v => !isNaN(v) && v > 0);
+      if (jNums.length > 0) {
+        const totalJ = jNums.reduce((a, b) => a + b, 0);
+        if (totalJ <= 0) return null;
+        const pNums = pSlice.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 0);
+        const totalP = pNums.reduce((a, b) => a + b, 0);
+        return Math.min(100, Math.round((totalP / totalJ) * 100));
+      }
+
+      // Fallback: hitung slot boolean (TRUE/v/✓)
       const totalJ = jSlice.filter(isTruthy).length;
       if (totalJ === 0) return null;
       const totalP = pSlice.filter(isTruthy).length;
@@ -350,7 +366,7 @@
     // ============================================================
     function buildCard(item, bidangCls, targetYear, yrOff) {
       const pct = hitungPersen(item, yrOff);
-      const pgPct = progressPct(item);
+      const pgPct = pct !== null ? pct : 0;
 
       // ── Badges baris atas ──
       const priBadge = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
