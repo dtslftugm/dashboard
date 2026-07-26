@@ -27,6 +27,9 @@
           <p>Departemen Teknik Sipil &amp; Lingkungan – Universitas Gadjah Mada</p>
         </div>
         <div class="theme-controls">
+          <button id="btn-refresh-data" class="theme-toggle" title="Refresh Data dari Spreadsheet" aria-label="Refresh Data">
+            🔄
+          </button>
           <select id="palette-select" class="palette-select" title="Pilih Variasi Tema Palette">
             <option value="slate">🎨 Soft Slate</option>
             <option value="sage">🌿 Warm Sage</option>
@@ -611,9 +614,9 @@
     }
 
     // ============================================================
-    // FETCH DATA (JSONP)
+    // FETCH DATA (Dual-Layer: Native Fetch API + JSONP Fallback)
     // ============================================================
-    function fetchData(forceRefresh = false) {
+    async function fetchData(forceRefresh = false) {
       if (!forceRefresh) {
         const cached = loadCache();
         if (cached) {
@@ -626,12 +629,33 @@
       document.getElementById("main-content").innerHTML =
         `<div class="loading-overlay"><div class="spinner"></div><span>Memuat data Renstra...</span></div>`;
 
+      // 1. Coba menggunakan Fetch API terlebih dahulu (lebih responsif & ramah mobile browser)
+      try {
+        const res = await fetch(`${GAS_URL}?_=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.raw) {
+            handleDataRenstra(data);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("[Renstra] Fetch API gagal/terblokir, mencoba teknik JSONP...", err);
+      }
+
+      // 2. Fallback menggunakan Tag Script JSONP
+      const oldScript = document.getElementById("jsonp-script");
+      if (oldScript) oldScript.remove();
+
       const script = document.createElement("script");
       script.id = "jsonp-script";
       script.src = `${GAS_URL}?callback=handleDataRenstra&_=${Date.now()}`;
       script.onerror = () => {
         document.getElementById("main-content").innerHTML =
-          `<div class="error-box">⚠️ Gagal menghubungi API. Pastikan GAS sudah di-deploy ulang.</div>`;
+          `<div class="error-box">
+            <p>⚠️ Gagal menghubungi API (Koneksi terganggu / terblokir oleh pengaman mobile browser).</p>
+            <button onclick="clearCache(); fetchData(true);" class="f-chip active" style="margin-top:10px; cursor:pointer; padding:6px 14px;">🔄 Coba Lagi</button>
+          </div>`;
       };
       document.body.appendChild(script);
     }
@@ -687,7 +711,19 @@
     document.getElementById("filter-pic").addEventListener("change", e => { filterState.pic = e.target.value; applyFilter(); });
     document.getElementById("filter-sumber").addEventListener("change", e => { filterState.sumber = e.target.value; applyFilter(); });
 
-    // Double click header to clear cache (since we removed the reset button)
+    // Refresh Data Button
+    const btnRefresh = document.getElementById("btn-refresh-data");
+    if (btnRefresh) {
+      btnRefresh.addEventListener("click", () => {
+        btnRefresh.style.transform = "rotate(360deg)";
+        btnRefresh.style.transition = "transform 0.5s ease";
+        clearCache();
+        fetchData(true);
+        setTimeout(() => { btnRefresh.style.transform = ""; btnRefresh.style.transition = ""; }, 500);
+      });
+    }
+
+    // Double click header to clear cache
     document.querySelector(".header-title").addEventListener("dblclick", () => {
       clearCache();
       fetchData(true);
