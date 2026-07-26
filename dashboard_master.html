@@ -418,9 +418,9 @@
 
       // ── Footer: Gap, Note, Remark ──
       let footerRows = "";
-      if (item.gap) footerRows += `<div class="footer-row"><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
-      if (item.notePerubahan) footerRows += `<div class="footer-row"><strong>Note:</strong> ${esc(item.notePerubahan)}</div>`;
-      if (item.remark) footerRows += `<div class="footer-row"><strong>Remark:</strong> ${esc(item.remark)}</div>`;
+      if (item.gap) footerRows += `<div class="footer-row"><span class="footer-icon">⚠️</span><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
+      if (item.notePerubahan) footerRows += `<div class="footer-row"><span class="footer-icon">📝</span><strong>Note:</strong> ${esc(item.notePerubahan)}</div>`;
+      if (item.remark) footerRows += `<div class="footer-row"><span class="footer-icon">💬</span><strong>Remark:</strong> ${esc(item.remark)}</div>`;
       const footerHtml = footerRows ? `<div class="card-footer-info">${footerRows}</div>` : "";
 
       return `<div class="card ${bidangCls}">
@@ -430,8 +430,8 @@
     ${pctHtml}
   </div>
   <div class="card-title">${esc(item.program)}</div>
-  ${item.programPayung ? `<div class="card-program-payung">${esc(item.programPayung)}</div>` : ""}
-  ${item.indikator ? `<div class="card-indikator-kinerja"><span>Indikator:</span> ${esc(item.indikator)}</div>` : ""}
+  ${item.programPayung ? `<div class="card-program-payung"><span class="card-row-icon">☂️</span>${esc(item.programPayung)}</div>` : ""}
+  ${item.indikator ? `<div class="card-indikator-kinerja"><span class="card-row-icon">⏱️</span><span>Indikator:</span> ${esc(item.indikator)}</div>` : ""}
   <div class="card-kpi">
     <div class="kpi-box">
       <div class="kpi-label">Baseline 2025</div>
@@ -449,14 +449,20 @@
       <div class="kpi-value">${fv(item.ultimate)}</div>
     </div>` : ""}
   </div>
-  <div class="card-progress"><div class="card-progress-fill" style="width:${pgPct}%"></div></div>
+  <div class="card-progress-wrap">
+    <div class="card-progress-header">
+      <span class="card-progress-label">📊 Progress Pelaksanaan</span>
+      <span class="card-progress-pct">${pgPct}%</span>
+    </div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:${pgPct}%"></div></div>
+  </div>
   <div class="card-schedule">
     <div class="schedule-row">
-      <span class="schedule-label">Jadwal:</span>
+      <span class="schedule-label"><span class="schedule-icon">📅</span>Jadwal:</span>
       <div class="schedule-chips">${jadwalChips}</div>
     </div>
     <div class="schedule-row">
-      <span class="schedule-label">Realisasi:</span>
+      <span class="schedule-label"><span class="schedule-icon">✅</span>Realisasi:</span>
       <div class="schedule-chips">${realChips}</div>
     </div>
   </div>
