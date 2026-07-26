@@ -219,20 +219,23 @@
     function parseRow(row, cm) {
       const g = (name) => { const i = cm[norm(name)]; return i !== undefined ? row[i] : null; };
 
-      // Jadwal (20 Q: Y-AR = idx 24-43)
+      // Jadwal (10 semester: Genap & Gasal per 2026-2030)
+      const semList = ["Genap", "Gasal"];
       const jadwal = [];
-      for (let y = 0; y < 5; y++)
-        for (let q = 1; q <= 4; q++)
-          jadwal.push(g(`Jadwal ${BASE_YEAR + y} Q${q}`));
+      for (let y = 0; y < 5; y++) {
+        for (let s of semList) {
+          jadwal.push(g(`Jadwal ${BASE_YEAR + y} ${s}`));
+        }
+      }
 
-      // Realisasi/Pelaksanaan (20 Q: BJ-CC = idx 61-80)
+      // Realisasi/Pelaksanaan (10 semester: Genap & Gasal per 2026-2030)
       const pelaksanaan = [];
-      for (let y = 0; y < 5; y++)
-        for (let q = 1; q <= 4; q++) {
-          // Header asli: "Pelaksanaan  2026 Q1" (double space), coba dua varian
-          const v = g(`Pelaksanaan ${BASE_YEAR + y} Q${q}`);
+      for (let y = 0; y < 5; y++) {
+        for (let s of semList) {
+          const v = g(`Pelaksanaan ${BASE_YEAR + y} ${s}`) ?? g(`Pelaksanaan  ${BASE_YEAR + y} ${s}`);
           pelaksanaan.push(v !== null ? v : null);
         }
+      }
 
       // RASCE: PIC_LABELS, filter non-empty
       const rasce = PIC_LABELS.map((lbl, idx) => ({
@@ -289,8 +292,8 @@
 
     // ── Persentase selesai (tahun berjalan) ──
     function hitungPersen(item, yrOff) {
-      const jSlice = item.jadwal.slice(yrOff, yrOff + 4);
-      const pSlice = item.pelaksanaan.slice(yrOff, yrOff + 4);
+      const jSlice = item.jadwal.slice(yrOff, yrOff + 2);
+      const pSlice = item.pelaksanaan.slice(yrOff, yrOff + 2);
       const totalJ = jSlice.filter(isTruthy).length;
       if (totalJ === 0) return null;
       const totalP = pSlice.filter(isTruthy).length;
@@ -328,6 +331,17 @@
 
     function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
+    function formatQChipLabel(lbl, val) {
+      if (val === null || val === undefined || val === "" || val === false || val === "FALSE" || val === 0 || val === "0") {
+        return lbl;
+      }
+      const str = String(val).trim();
+      if (str === "1" || str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
+        return lbl;
+      }
+      return `${lbl}: ${str}`;
+    }
+
     // ============================================================
     // CARD HTML BUILDER
     // ============================================================
@@ -359,33 +373,40 @@
         sumberHtml = `<div class="card-sumber"><span class="sumber-label">Sumber:</span>${chips}</div>`;
       }
 
-      // ── RASCE chips (max 3 tampil, sisanya "+N lagi") ──
+      // ── RASCE chips (tampilkan semua PIC) ──
       let rasceHtml = "";
       if (item.rasce.length > 0) {
-        const MAX_RASCE = 3;
-        const shown = item.rasce.slice(0, MAX_RASCE);
-        const more = item.rasce.length - MAX_RASCE;
-        const chips = shown.map(p =>
-          `<span class="rasce-chip"><span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
+        const allChips = item.rasce.map(p =>
+          `<span class="rasce-chip">`
+          + `<span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
         ).join("");
-        const moreTag = more > 0 ? `<span class="rasce-more">+${more} lagi</span>` : "";
-        rasceHtml = `<div class="card-rasce"><span class="rasce-label">RASCE:</span>${chips}${moreTag}</div>`;
+        rasceHtml = `<div class="card-rasce"><span class="rasce-label">RASCE:</span>${allChips}</div>`;
       }
 
-      // ── Jadwal & Realisasi Q chips (tahun berjalan) ──
-      const qLabels = ["Genap", "Gasal"];
-      const jadwalQ = item.jadwal.slice(yrOff, yrOff + 4);
-      const realQ = item.pelaksanaan.slice(yrOff, yrOff + 4);
-      const jadwalChips = qLabels.map((lbl, i) =>
-        `<span class="q-chip${isTruthy(jadwalQ[i]) ? " scheduled" : ""}">${lbl}</span>`
-      ).join("");
-      const realChips = qLabels.map((lbl, i) => {
-        if (isTruthy(realQ[i])) {
-          return isTruthy(jadwalQ[i])
-            ? `<span class="q-chip realized">${lbl}</span>`
-            : `<span class="q-chip realized-check">✓</span>`;
+      // ── Jadwal & Realisasi chips (2 Semester: Genap & Gasal per tahun berjalan) ──
+      const semLabels = ["Genap", "Gasal"];
+      const jadwalQ = item.jadwal.slice(yrOff, yrOff + 2);
+      const realQ = item.pelaksanaan.slice(yrOff, yrOff + 2);
+
+      const jadwalChips = semLabels.map((lbl, i) => {
+        const val = jadwalQ[i];
+        const active = isTruthy(val);
+        const text = formatQChipLabel(lbl, val);
+        const titleText = active ? `Jadwal ${lbl}: ${esc(val)}` : `Tidak dijadwalkan`;
+        return `<span class="q-chip${active ? " scheduled" : ""}" title="${titleText}">${esc(text)}</span>`;
+      }).join("");
+
+      const realChips = semLabels.map((lbl, i) => {
+        const val = realQ[i];
+        const active = isTruthy(val);
+        const text = formatQChipLabel(lbl, val);
+        if (active) {
+          const isScheduled = isTruthy(jadwalQ[i]);
+          const cls = isScheduled ? "realized" : "realized-check";
+          const titleText = `Realisasi ${lbl}: ${esc(val)}`;
+          return `<span class="q-chip ${cls}" title="${titleText}">${esc(text)}</span>`;
         }
-        return `<span class="q-chip">${lbl}</span>`;
+        return `<span class="q-chip" title="Belum terealisasi">${esc(text)}</span>`;
       }).join("");
 
       // ── KPI: Baseline → Target tahun berjalan → Ultimate ──
@@ -450,7 +471,7 @@
         return;
       }
 
-      const yrOff = Math.max(0, Math.min(16, (filterState.tahun - BASE_YEAR) * 4));
+      const yrOff = Math.max(0, Math.min(8, (filterState.tahun - BASE_YEAR) * 2));
 
       let html = `
         <div class="grid-header-wrap">
@@ -671,6 +692,8 @@
       clearCache();
       fetchData(true);
     });
+
+
 
     // ============================================================
     // INIT
