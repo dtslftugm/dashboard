@@ -336,7 +336,7 @@
         return lbl;
       }
       const str = String(val).trim();
-      if (str === "1" || str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
+      if (str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
         return lbl;
       }
       return `${lbl}: ${str}`;
