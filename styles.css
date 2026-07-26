@@ -854,6 +854,15 @@ body {
   color: var(--text-muted);
 }
 
+/* ── CARD ROW ICONS (emoji prefix utk label baris) ── */
+.card-row-icon {
+  font-style: normal;
+  margin-right: 3px;
+  font-size: 11px;
+  opacity: .85;
+  flex-shrink: 0;
+}
+
 /* ── CARD SUBTITLE & INDIKATOR ── */
 .card-program-payung {
   font-size: 11px;
@@ -862,6 +871,8 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 .card-indikator-kinerja {
@@ -869,6 +880,9 @@ body {
   color: var(--text-muted);
   font-style: italic;
   margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .card-indikator-kinerja span {
@@ -961,42 +975,67 @@ body {
 }
 
 /* ── PROGRESS BAR ── */
+.card-progress-wrap {
+  margin-bottom: 12px;
+}
+
+.card-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.card-progress-label {
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.card-progress-pct {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: .2px;
+}
+
 .card-progress {
-  height: 3px;
+  height: 7px;
   background: rgba(0, 0, 0, .08);
-  border-radius: 2px;
-  margin-bottom: 10px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 [data-theme="dark"] .card-progress {
-  background: rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .10);
 }
 
 .card-progress-fill {
   height: 100%;
-  border-radius: 2px;
+  border-radius: 4px;
   transition: width .6s ease;
 }
 
 .card.bidang-pendidikan .card-progress-fill {
-  background: var(--pendidikan);
+  background: linear-gradient(90deg, var(--pendidikan), color-mix(in srgb, var(--pendidikan) 60%, #fff));
 }
 
 .card.bidang-penelitian .card-progress-fill {
-  background: var(--penelitian);
+  background: linear-gradient(90deg, var(--penelitian), color-mix(in srgb, var(--penelitian) 60%, #fff));
 }
 
 .card.bidang-pkm .card-progress-fill {
-  background: var(--pkm);
+  background: linear-gradient(90deg, var(--pkm), color-mix(in srgb, var(--pkm) 60%, #fff));
 }
 
 .card.bidang-sdm .card-progress-fill {
-  background: var(--sdm);
+  background: linear-gradient(90deg, var(--sdm), color-mix(in srgb, var(--sdm) 60%, #fff));
 }
 
 .card.bidang-ekosistem .card-progress-fill {
-  background: var(--ekosistem);
+  background: linear-gradient(90deg, var(--ekosistem), color-mix(in srgb, var(--ekosistem) 60%, #fff));
 }
 
 /* ── JADWAL / REALISASI ── */
@@ -1013,14 +1052,21 @@ body {
   gap: 5px;
 }
 
+.schedule-icon {
+  font-size: 10px;
+  margin-right: 2px;
+}
+
 .schedule-label {
   font-size: 9px;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: .3px;
-  width: 52px;
+  width: 68px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .schedule-chips {
@@ -1079,6 +1125,14 @@ body {
   text-transform: uppercase;
   letter-spacing: .3px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sumber-label::before {
+  content: '🏷️';
+  font-size: 10px;
 }
 
 .sumber-chip {
@@ -1108,6 +1162,14 @@ body {
   letter-spacing: .3px;
   flex-shrink: 0;
   margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.rasce-label::before {
+  content: '👥';
+  font-size: 10px;
 }
 
 .rasce-chip {
@@ -1169,13 +1231,22 @@ body {
   margin-top: 4px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .footer-row {
   font-size: 10px;
   color: var(--text-muted);
   line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.footer-icon {
+  font-size: 11px;
+  flex-shrink: 0;
+  line-height: 1.4;
 }
 
 .footer-row strong {
