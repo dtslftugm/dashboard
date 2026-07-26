@@ -361,13 +361,6 @@
       const tipeCls = tipeLower.includes("kumulatif") ? "badge-kumulatif" : tipeLower.includes("inkrement") ? "badge-inkremental" : "badge-tipe";
       const tipeBadge = item.tipeTarget ? `<span class="badge ${tipeCls}">${esc(item.tipeTarget)}</span>` : "";
 
-      // ── Pct badge ──
-      let pctHtml = "";
-      if (pct !== null) {
-        const pctCls = pct >= 100 ? "pct-full" : pct > 0 ? "pct-partial" : "pct-zero";
-        pctHtml = `<span class="pct-badge ${pctCls}">${pct}% selesai</span>`;
-      }
-
       // ── Sumber Gap chips ──
       let sumberHtml = "";
       if (item.sumberGap) {
@@ -427,7 +420,6 @@
   <div class="card-top">
     <span class="card-id">${esc(item.id)}</span>
     <div class="card-badges">${priBadge}${lvlBadge}${tipeBadge}</div>
-    ${pctHtml}
   </div>
   <div class="card-title">${esc(item.program)}</div>
   ${item.programPayung ? `<div class="card-program-payung"><span class="card-row-icon">☂️</span>${esc(item.programPayung)}</div>` : ""}
