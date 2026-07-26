@@ -1160,35 +1160,7 @@ body {
   color: #fff;
 }
 
-.rasce-chip.rasce-hidden {
-  display: none !important;
-}
 
-.rasce-more {
-  display: inline-flex;
-  align-items: center;
-  font-size: 9px;
-  color: #3b82f6;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s ease;
-  align-self: center;
-}
-
-.rasce-more:hover {
-  background: var(--border);
-  color: var(--text);
-  transform: translateY(-1px);
-}
-
-.rasce-more:active {
-  transform: translateY(0);
-}
 
 /* ── CARD FOOTER ── */
 .card-footer-info {
