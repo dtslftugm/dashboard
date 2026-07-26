@@ -1,739 +1,196 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Renstra DTSL</title>
-  <meta name="description"
-    content="Dashboard monitoring data pendukung Rencana Strategis Departemen Teknik Sipil dan Lingkungan FT UGM">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Bidang Dashboard</title>
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
+<body class="bg-gray-100 font-sans pb-10">
 
-<body>
-
-  <header class="header">
-    <div class="header-inner">
-      <div class="header-top">
-        <div class="logo-container">
-          <img src="logo%20DTSL.png" alt="Logo DTSL" class="dtsl-logo"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="logo-badge" style="display:none;">📊</div>
-        </div>
-        <div class="header-title">
-          <h1>Dashboard Renstra DTSL</h1>
-          <p>Departemen Teknik Sipil &amp; Lingkungan – Universitas Gadjah Mada</p>
-        </div>
-        <div class="theme-controls">
-          <button id="btn-refresh-data" class="theme-toggle" title="Refresh Data dari Spreadsheet" aria-label="Refresh Data">
-            🔄
-          </button>
-          <select id="palette-select" class="palette-select" title="Pilih Variasi Tema Palette">
-            <option value="slate">🎨 Soft Slate</option>
-            <option value="sage">🌿 Warm Sage</option>
-            <option value="nordic">🟣 Nordic Twilight</option>
-          </select>
-          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Mode Dark/Light">
-            🌙
-          </button>
-        </div>
-      </div>
-      <div class="filter-panel">
-        <div class="filter-top">
-          <div class="filter-group-inline">
-            <span class="filter-label">Tahun:</span>
-            <div class="filter-chips" id="filter-tahun">
-              <button class="f-chip active" data-val="2026">2026</button>
-              <button class="f-chip" data-val="2027">2027</button>
-              <button class="f-chip" data-val="2028">2028</button>
-              <button class="f-chip" data-val="2029">2029</button>
-              <button class="f-chip" data-val="2030">2030</button>
-            </div>
-          </div>
-
-          <div class="filter-group-inline">
-            <span class="filter-label">Level:</span>
-            <div class="filter-chips" id="filter-level">
-              <button class="f-chip active" data-val="">Semua</button>
-              <button class="f-chip" data-val="Payung">Payung</button>
-              <button class="f-chip" data-val="Aksi">Aksi</button>
-            </div>
-          </div>
-
-          <div class="filter-group-inline">
-            <span class="filter-label">Prioritas:</span>
-            <div class="filter-chips" id="filter-prioritas">
-              <button class="f-chip active" data-val="">Semua</button>
-              <button class="f-chip" data-val="1">P1</button>
-              <button class="f-chip" data-val="2">P2</button>
-              <button class="f-chip" data-val="3">P3</button>
-            </div>
-          </div>
-
-          <div class="search-box">
-            <input type="text" id="filter-search" placeholder="Cari program, gap, indikator...">
-          </div>
-
-          <div class="program-count" id="program-count">0 / 0 program</div>
-        </div>
-
-        <button class="btn-lanjutan" id="btn-lanjutan">Filter Lanjutan ▼</button>
-
-        <div class="filter-lanjutan-panel" id="filter-lanjutan-panel">
-          <div class="filter-group">
-            <span class="filter-label">Bidang:</span>
-            <select id="filter-bidang">
-              <option value="">Semua Bidang</option>
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        
+        <!-- Dropdown Pemilih Bidang Dashboard -->
+        <div class="mb-8 max-w-xs mx-auto text-center">
+            <label for="bidang-selector" class="block text-sm font-medium text-gray-700 mb-2">Pilih Bidang Dashboard:</label>
+            <select id="bidang-selector" class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer">
+                <option value="keuangan">Keuangan</option>
+                <option value="akademik">Akademik</option>
+                <option value="kerjasama">Kerjasama</option>
+                <option value="sdm">SDM</option>
             </select>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">Program Payung:</span>
-            <select id="filter-payung">
-              <option value="">Semua Program Payung</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">PIC:</span>
-            <select id="filter-pic">
-              <option value="">Semua PIC</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">Sumber Gap:</span>
-            <select id="filter-sumber">
-              <option value="">Semua Sumber Gap</option>
-            </select>
-          </div>
         </div>
-      </div>
+
+        <!-- Judul Group Dinamis dari Cell E2 -->
+        <h1 id="group-title" class="text-2xl font-bold text-gray-800 mb-6 text-center uppercase tracking-wide">
+            Memuat Data...
+        </h1>
+
+        <!-- Container Grid untuk Menampung Card Indikator/Kategori -->
+        <div id="card-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Card data terpopulasi otomatis di sini -->
+        </div>
     </div>
-  </header>
 
-  <main class="main" id="main-content">
-    <div class="loading-overlay" id="loading">
-      <div class="spinner"></div>
-      <span>Memuat data Renstra...</span>
-    </div>
-  </main>
+    <script>
+        // ======================================
+        // URL WEB APP GOOGLE APPS SCRIPT (GAS)
+        // ======================================
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxtVtLgZwTK928q48nfTuZHesNM65Q3xHct7PeRMwHrcqwtfEpHwwbMK6nQiDgW0o2a/exec"; 
 
-  <script>
-    // ============================================================
-    // KONFIGURASI
-    // ============================================================
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
-    const CACHE_KEY = "renstra_raw_v3";
-    const CACHE_TTL = 30 * 60 * 1000; // 30 menit
-    const BASE_YEAR = 2026;
+        /**
+         * Fungsi helper untuk memformat angka secara dinamis.
+         * Otomatis menggunakan format Rupiah (IDR) jika angka bernilai besar (> 100.000)
+         * yang biasanya mengindikasikan nominal mata uang/anggaran keuangan.
+         */
+        function formatNumber(value) {
+            if (typeof value === 'number') {
+                if (value > 100000) {
+                    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+                }
+                return new Intl.NumberFormat('id-ID').format(value);
+            }
+            return value;
+        }
 
-    // Label PIC (singkat) untuk chip RASCE
-    const PIC_LABELS = [
-      "PIC Kadep & Sekdep", "PIC Dosen DTSL", "PIC Tendik DTSL",
-      "PIC Tim SDM, Sarpras, & Keuangan", "PIC Tim Kerjasama",
-      "PIC Tim Akademik", "PIC Tim Jaminan Mutu",
-      "PIC Prodi TS", "PIC Prodi TIL", "PIC Prodi TSDA",
-      "PIC Prodi MTS", "PIC Prodi MSTT", "PIC Prodi MTPBA",
-      "PIC Prodi Doktor TS", "PIC Ketua KBK", "PIC Task Force", "PIC Lain-lain"
-    ];
-    const PIC_SHORT = [
-      "Kadep/Sekdep", "Dosen DTSL", "Tendik DTSL",
-      "Tim SDM/Sarpras", "Tim Kerjasama", "Tim Akademik", "Tim JM",
-      "Prodi TS", "Prodi TIL", "Prodi TSDA",
-      "Prodi MTS", "Prodi MSTT", "Prodi MTPBA",
-      "Prodi Doktor TS", "Ketua KBK", "Task Force", "Lain-lain"
-    ];
+        /**
+         * Fungsi helper untuk memformat persentase dari Google Sheets decimal (cth: 0.1916 menjadi 19.16%)
+         */
+        function formatPercent(value) {
+            return typeof value === 'number' ? (value * 100).toFixed(2) + '%' : value;
+        }
 
-    // ============================================================
-    // THEME & PALETTE TOGGLE
-    // ============================================================
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const paletteSelect = document.getElementById('palette-select');
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+        /**
+         * Fungsi utama untuk mengambil data dari backend GAS berdasarkan bidang terpilih
+         */
 
-    function applyTheme(t) {
-      document.documentElement.setAttribute("data-theme", t);
-      localStorage.setItem("theme", t);
-      themeToggleBtn.textContent = t === "dark" ? "☀️" : "🌙";
+// Fungsi global yang akan dipanggil secara otomatis oleh JSONP dari GAS
+function handleDataDashboard(data) {
+    const container = document.getElementById('card-container');
+    const titleEl = document.getElementById('group-title');
+
+    const oldScript = document.getElementById('jsonp-script');
+    if (oldScript) oldScript.remove();
+
+    if (data.error) {
+        titleEl.innerText = "Error: " + data.error;
+        return;
     }
 
-    function applyPalette(p) {
-      document.documentElement.setAttribute("data-palette", p);
-      localStorage.setItem("palette", p);
-      if (paletteSelect) paletteSelect.value = p;
-    }
+    titleEl.innerText = data.groupTitle;
 
-    const savedTheme = localStorage.getItem("theme");
-    const savedPalette = localStorage.getItem("palette") || "slate";
+    // 1. Loop Kategori - Tanpa border sama sekali, padding sangat minimal (p-2), gap-1.5
+    data.items.forEach(item => {
+        const persen2025 = item.rencana > 0 ? formatPercent(item.realisasi2025 / item.rencana) : "0.00%";
+        const selisih = ((item.realisasiPersen - (item.realisasi2025 / item.rencana)) * 100).toFixed(2);
 
-    applyTheme(savedTheme || (prefersDark.matches ? "dark" : "light"));
-    applyPalette(savedPalette);
+        const card = `
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden p-2 hover:shadow-md transition">
+                <h2 class="text-xs font-bold text-blue-900 pb-0.5 mb-1">${item.kategori}</h2>
+                
+                <div class="grid grid-cols-4 gap-1.5 text-center">
+                    <!-- Kolom 1: Realisasi 2026 -->
+                    <div class="bg-blue-50/70 p-1.5 rounded">
+                        <p class="text-[8px] text-blue-600 font-bold uppercase tracking-tight">Realisasi 2026</p>
+                        <p class="text-sm font-extrabold text-blue-950 mt-0.5">${formatPercent(item.realisasiPersen)}</p>
+                    </div>
 
-    themeToggleBtn.addEventListener("click", () => {
-      applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+                    <!-- Kolom 2: Rencana 2026 -->
+                    <div class="bg-gray-50/70 p-1.5 rounded">
+                        <p class="text-[8px] text-gray-500 font-bold uppercase tracking-tight">Rencana 2026</p>
+                        <p class="text-sm font-extrabold text-gray-700 mt-0.5">100.00%</p>
+                    </div>
+
+                    <!-- Kolom 3: Realisasi 2025 -->
+                    <div class="bg-emerald-50/70 p-1.5 rounded">
+                        <p class="text-[8px] text-emerald-600 font-bold uppercase tracking-tight">Realisasi 2025</p>
+                        <p class="text-sm font-extrabold text-emerald-950 mt-0.5">${persen2025}</p>
+                    </div>
+
+                    <!-- Kolom 4: Selisih -->
+                    <div class="bg-amber-50/70 p-1.5 rounded flex flex-col justify-center">
+                        <p class="text-[8px] text-amber-600 font-bold uppercase tracking-tight">Selisih Serapan</p>
+                        <p class="text-xs font-extrabold text-amber-950 mt-0.5">${selisih}%</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', card);
     });
 
-    if (paletteSelect) {
-      paletteSelect.addEventListener("change", e => {
-        applyPalette(e.target.value);
-      });
-    }
+    // 2. Render Card Total - Lebih padat, tanpa border pembatas judul
+    if (data.total && data.total.kategori) {
+        const totalPersen2025 = data.total.rencana > 0 ? formatPercent(data.total.realisasi2025 / data.total.rencana) : "0.00%";
+        const selisihTotal = ((data.total.realisasiPersen - (data.total.realisasi2025 / data.total.rencana)) * 100).toFixed(2);
 
-    // ============================================================
-    // STATE
-    // ============================================================
-    let allData = [];
-    let colMap = {};
+        const totalCard = `
+            <div class="bg-slate-800 text-white rounded-xl shadow-sm overflow-hidden p-2 md:col-span-2">
+                <h2 class="text-xs font-bold pb-0.5 mb-1">${data.total.kategori}</h2>
+                
+                <div class="grid grid-cols-4 gap-1.5 text-center">
+                    <!-- Kolom 1 -->
+                    <div class="bg-slate-900/50 p-1.5 rounded">
+                        <p class="text-[8px] text-emerald-400 font-bold uppercase tracking-tight">Total Realisasi 2026</p>
+                        <p class="text-sm font-extrabold text-emerald-300 mt-0.5">${formatPercent(data.total.realisasiPersen)}</p>
+                    </div>
 
-    // Auto-detect year initially, clamp to 2026-2030
-    let initialYear = new Date().getFullYear();
-    if (initialYear < 2026) initialYear = 2026;
-    if (initialYear > 2030) initialYear = 2030;
+                    <!-- Kolom 2 -->
+                    <div class="bg-slate-900/30 p-1.5 rounded">
+                        <p class="text-[8px] text-slate-400 font-bold uppercase tracking-tight">Total Rencana 2026</p>
+                        <p class="text-sm font-extrabold text-slate-300 mt-0.5">100.00%</p>
+                    </div>
 
-    let filterState = {
-      tahun: initialYear,
-      level: "",
-      prioritas: "",
-      search: "",
-      bidang: "",
-      payung: "",
-      pic: "",
-      sumber: ""
+                    <!-- Kolom 3 -->
+                    <div class="bg-slate-900/50 p-1.5 rounded">
+                        <p class="text-[8px] text-sky-400 font-bold uppercase tracking-tight">Total Realisasi 2025</p>
+                        <p class="text-sm font-extrabold text-sky-300 mt-0.5">${totalPersen2025}</p>
+                    </div>
+
+                    <!-- Kolom 4 -->
+                    <div class="bg-slate-900/30 p-1.5 rounded flex flex-col justify-center">
+                        <p class="text-[8px] text-amber-400 font-bold uppercase tracking-tight">Selisih Serapan</p>
+                        <p class="text-xs font-extrabold text-white mt-0.5">${selisihTotal}%</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', totalCard);
+    }   
+}
+
+// Fungsi utama untuk meminta data dengan metode JSONP
+function fetchDashboardData(namaBidang) {
+    const container = document.getElementById('card-container');
+    const titleEl = document.getElementById('group-title');
+    
+    titleEl.innerText = "Memuat Data...";
+    container.innerHTML = ""; 
+
+    // Membuat elemen <script> untuk memicu request JSONP bypass CORS
+    const script = document.createElement('script');
+    script.id = 'jsonp-script';
+    
+    // Menyertakan parameter callback menuju fungsi 'handleDataDashboard'
+    script.src = `${GAS_API_URL}?bidang=${namaBidang}&callback=handleDataDashboard`;
+    
+    // Jika terjadi kegagalan load script
+    script.onerror = function() {
+        titleEl.innerText = "Gagal Menghubungkan ke API Google Apps Script (JSONP Error)";
     };
 
-    // ============================================================
-    // UTILS
-    // ============================================================
-    function norm(s) { return String(s ?? "").trim().replace(/\s+/g, " "); }
+    // Memasukkan script ke dokumen untuk mengeksekusi request
+    document.body.appendChild(script);
+}
 
-    function buildColMap(headers) {
-      const m = {};
-      headers.forEach((h, i) => { m[norm(h)] = i; });
-      return m;
-    }
-
-    function isTruthy(v) {
-      if (v === true || v === 1 || v === "1" || v === "TRUE") return true;
-      if (typeof v === "number" && v > 0) return true;
-      if (typeof v === "string" && v.trim() !== "" && v !== "0" && v.toUpperCase() !== "FALSE") return true;
-      return false;
-    }
-
-    function parseRow(row, cm) {
-      const g = (name) => { const i = cm[norm(name)]; return i !== undefined ? row[i] : null; };
-
-      // Jadwal (10 semester: Genap & Gasal per 2026-2030)
-      const semList = ["Genap", "Gasal"];
-      const jadwal = [];
-      for (let y = 0; y < 5; y++) {
-        for (let s of semList) {
-          jadwal.push(g(`Jadwal ${BASE_YEAR + y} ${s}`));
-        }
-      }
-
-      // Realisasi/Pelaksanaan (10 semester: Genap & Gasal per 2026-2030)
-      const pelaksanaan = [];
-      for (let y = 0; y < 5; y++) {
-        for (let s of semList) {
-          const v = g(`Pelaksanaan ${BASE_YEAR + y} ${s}`) ?? g(`Pelaksanaan  ${BASE_YEAR + y} ${s}`);
-          pelaksanaan.push(v !== null ? v : null);
-        }
-      }
-
-      // RASCE: PIC_LABELS, filter non-empty
-      const rasce = PIC_LABELS.map((lbl, idx) => ({
-        short: PIC_SHORT[idx],
-        role: norm(g(lbl))
-      })).filter(p => p.role !== "");
-
-      // Anggaran & Sumber (5 tahun)
-      const anggaran = [0, 1, 2, 3, 4].map(i => g(`Anggaran ${BASE_YEAR + i} (juta Rupiah)`) ?? g(`Anggaran ${BASE_YEAR + i}`));
-      const sumberAnggaran = [0, 1, 2, 3, 4].map(i => g(`Sumber anggaran ${BASE_YEAR + i} (% Sumber)`) ?? g(`Sumber anggaran ${BASE_YEAR + i}`));
-
-      return {
-        no: g("No"),
-        bidang: norm(g("Bidang")),
-        gap: norm(g("Gap")),
-        programPayung: norm(g("Program Payung")),
-        id: norm(g("ID")),
-        indikator: norm(g("Indikator Kinerja (Key Performance)")),
-        sumberGap: norm(g("Sumber Gap")),
-        program: norm(g("Program (Aksi)")),
-        level: norm(g("Level")),
-        priority: g("Priority (1-3)"),
-        value: g("VALUE"),
-        satuan: norm(g("Satuan Output")),
-        namaDatabase: norm(g("Nama Database")),
-        sheetUrl: norm(g("Sheet")),
-        baseline2025: g("Baseline (2025)"),
-        target2026: g("Target 2026"),
-        target2027: g("Target 2027"),
-        target2028: g("Target 2028"),
-        target2029: g("Target 2029"),
-        target2030: g("Target 2030"),
-        ultimate: g("Ultimate 2030"),
-        tipeTarget: norm(g("Tipe Target")),
-        notePerubahan: norm(g("Note Perubahan")),
-        remark: norm(g("Remark")),
-        jadwal, rasce, pelaksanaan,
-        evaluasi: norm(g("Evaluasi")),
-        anggaran, sumberAnggaran
-      };
-    }
-
-    function parseRawData(raw) {
-      if (!raw || raw.length < 2) return [];
-      const cm = buildColMap(raw[0]);
-      colMap = cm;
-      const items = [];
-      for (let i = 1; i < raw.length; i++) {
-        const item = parseRow(raw[i], cm);
-        if (item.program) items.push(item); // skip empty rows
-      }
-      return items;
-    }
-
-    // ── Persentase selesai (tahun berjalan) ──
-    function hitungPersen(item, yrOff) {
-      const jSlice = item.jadwal.slice(yrOff, yrOff + 2);
-      const pSlice = item.pelaksanaan.slice(yrOff, yrOff + 2);
-      const totalJ = jSlice.filter(isTruthy).length;
-      if (totalJ === 0) return null;
-      const totalP = pSlice.filter(isTruthy).length;
-      return Math.round((totalP / totalJ) * 100);
-    }
-
-    // ── Progress bar baseline→ultimate ──
-    function progressPct(item) {
-      const b = parseFloat(item.baseline2025) || 0;
-      const u = parseFloat(item.ultimate) || 0;
-      if (u <= 0) return 0;
-      return Math.min(100, Math.round((b / u) * 100));
-    }
-
-    function bidangKey(b) {
-      if (!b) return "other";
-      const s = b.toLowerCase();
-      if (s.includes("pendidikan")) return "pendidikan";
-      if (s.includes("penelitian")) return "penelitian";
-      if (s.includes("pkm") || s.includes("pengabdian")) return "pkm";
-      if (s.includes("sdm")) return "sdm";
-      if (s.includes("ekosistem") || s.includes("berkelanjutan")) return "ekosistem";
-      return "other";
-    }
-
-    function bidangColor(b) {
-      return { pendidikan: "#6366f1", penelitian: "#a855f7", pkm: "#10b981", sdm: "#f59e0b", ekosistem: "#06b6d4", other: "#8b92b3" }[bidangKey(b)] || "#8b92b3";
-    }
-
-    function fv(v) {
-      if (v === null || v === undefined || v === "") return "—";
-      if (typeof v === "number") return Number.isInteger(v) ? v.toLocaleString("id-ID") : v.toLocaleString("id-ID", { maximumFractionDigits: 2 });
-      return String(v);
-    }
-
-    function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-
-    function formatQChipLabel(lbl, val) {
-      if (val === null || val === undefined || val === "" || val === false || val === "FALSE" || val === 0 || val === "0") {
-        return lbl;
-      }
-      const str = String(val).trim();
-      if (str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
-        return lbl;
-      }
-      return `${lbl}: ${str}`;
-    }
-
-    // ============================================================
-    // CARD HTML BUILDER
-    // ============================================================
-    function buildCard(item, bidangCls, targetYear, yrOff) {
-      const pct = hitungPersen(item, yrOff);
-      const pgPct = progressPct(item);
-
-      // ── Badges baris atas ──
-      const priBadge = item.priority ? `<span class="badge badge-p${item.priority}">P${item.priority}</span>` : "";
-      const lvlBadge = item.level === "Payung"
-        ? `<span class="badge badge-payung">Payung</span>`
-        : `<span class="badge badge-aksi">Aksi</span>`;
-      const tipeLower = (item.tipeTarget || "").toLowerCase();
-      const tipeCls = tipeLower.includes("kumulatif") ? "badge-kumulatif" : tipeLower.includes("inkrement") ? "badge-inkremental" : "badge-tipe";
-      const tipeBadge = item.tipeTarget ? `<span class="badge ${tipeCls}">${esc(item.tipeTarget)}</span>` : "";
-
-      // ── Sumber Gap chips ──
-      let sumberHtml = "";
-      if (item.sumberGap) {
-        const chips = item.sumberGap.split(/[,;]/).map(s => s.trim()).filter(Boolean)
-          .map(s => `<span class="sumber-chip">${esc(s)}</span>`).join("");
-        sumberHtml = `<div class="card-sumber"><span class="sumber-label">Sumber:</span>${chips}</div>`;
-      }
-
-      // ── RASCE chips (tampilkan semua PIC) ──
-      let rasceHtml = "";
-      if (item.rasce.length > 0) {
-        const allChips = item.rasce.map(p =>
-          `<span class="rasce-chip">`
-          + `<span class="rasce-role role-${esc(p.role)}">${esc(p.role)}</span>${esc(p.short)}</span>`
-        ).join("");
-        rasceHtml = `<div class="card-rasce"><span class="rasce-label">RASCE:</span>${allChips}</div>`;
-      }
-
-      // ── Jadwal & Realisasi chips (2 Semester: Genap & Gasal per tahun berjalan) ──
-      const semLabels = ["Genap", "Gasal"];
-      const jadwalQ = item.jadwal.slice(yrOff, yrOff + 2);
-      const realQ = item.pelaksanaan.slice(yrOff, yrOff + 2);
-
-      const jadwalChips = semLabels.map((lbl, i) => {
-        const val = jadwalQ[i];
-        const active = isTruthy(val);
-        const text = formatQChipLabel(lbl, val);
-        const titleText = active ? `Jadwal ${lbl}: ${esc(val)}` : `Tidak dijadwalkan`;
-        return `<span class="q-chip${active ? " scheduled" : ""}" title="${titleText}">${esc(text)}</span>`;
-      }).join("");
-
-      const realChips = semLabels.map((lbl, i) => {
-        const val = realQ[i];
-        const active = isTruthy(val);
-        const text = formatQChipLabel(lbl, val);
-        if (active) {
-          const isScheduled = isTruthy(jadwalQ[i]);
-          const cls = isScheduled ? "realized" : "realized-check";
-          const titleText = `Realisasi ${lbl}: ${esc(val)}`;
-          return `<span class="q-chip ${cls}" title="${titleText}">${esc(text)}</span>`;
-        }
-        return `<span class="q-chip" title="Belum terealisasi">${esc(text)}</span>`;
-      }).join("");
-
-      // ── KPI: Baseline → Target tahun berjalan → Ultimate ──
-      const targetCurYear = item[`target${targetYear}`] ?? item.target2026;
-      const tgtLabel = `Target ${targetYear}`;
-
-      // ── Footer: Gap, Note, Remark ──
-      let footerRows = "";
-      if (item.gap) footerRows += `<div class="footer-row"><span class="footer-icon">⚠️</span><strong>Gap:</strong> <em>${esc(item.gap)}</em></div>`;
-      if (item.notePerubahan) footerRows += `<div class="footer-row"><span class="footer-icon">📝</span><strong>Note:</strong> ${esc(item.notePerubahan)}</div>`;
-      if (item.remark) footerRows += `<div class="footer-row"><span class="footer-icon">💬</span><strong>Remark:</strong> ${esc(item.remark)}</div>`;
-      const footerHtml = footerRows ? `<div class="card-footer-info">${footerRows}</div>` : "";
-
-      return `<div class="card ${bidangCls}">
-  <div class="card-top">
-    <span class="card-id">${esc(item.id)}</span>
-    <div class="card-badges">${priBadge}${lvlBadge}${tipeBadge}</div>
-  </div>
-  <div class="card-title">${esc(item.program)}</div>
-  ${item.programPayung ? `<div class="card-program-payung"><span class="card-row-icon">☂️</span>${esc(item.programPayung)}</div>` : ""}
-  ${item.indikator ? `<div class="card-indikator-kinerja"><span class="card-row-icon">⏱️</span><span>Indikator:</span> ${esc(item.indikator)}</div>` : ""}
-  <div class="card-kpi">
-    <div class="kpi-box">
-      <div class="kpi-label">Baseline 2025</div>
-      <div class="kpi-value">${fv(item.baseline2025)}</div>
-      <div class="kpi-unit">${esc(item.satuan)}</div>
-    </div>
-    <div class="kpi-arrow">→</div>
-    <div class="kpi-box">
-      <div class="kpi-label">${tgtLabel}</div>
-      <div class="kpi-value">${fv(targetCurYear)}</div>
-      <div class="kpi-unit">${esc(item.satuan)}</div>
-    </div>
-    ${item.ultimate !== null ? `<div class="kpi-ultimate">
-      <div class="kpi-label">Ultimate</div>
-      <div class="kpi-value">${fv(item.ultimate)}</div>
-    </div>` : ""}
-  </div>
-  <div class="card-progress-wrap">
-    <div class="card-progress-header">
-      <span class="card-progress-label">📊 Progress Pelaksanaan</span>
-      <span class="card-progress-pct">${pgPct}%</span>
-    </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:${pgPct}%"></div></div>
-  </div>
-  <div class="card-schedule">
-    <div class="schedule-row">
-      <span class="schedule-label"><span class="schedule-icon">📅</span>Jadwal:</span>
-      <div class="schedule-chips">${jadwalChips}</div>
-    </div>
-    <div class="schedule-row">
-      <span class="schedule-label"><span class="schedule-icon">✅</span>Realisasi:</span>
-      <div class="schedule-chips">${realChips}</div>
-    </div>
-  </div>
-  ${sumberHtml}${rasceHtml}${footerHtml}
-</div>`;
-    }
-
-    // ============================================================
-    // RENDER DASHBOARD
-    // ============================================================
-    function renderDashboard(data) {
-      const container = document.getElementById("main-content");
-      if (!data || !data.length) {
-        container.innerHTML = `<div class="empty-state"><div class="emoji">🔍</div><p>Tidak ada data yang sesuai filter.</p></div>`;
-        return;
-      }
-
-      const yrOff = Math.max(0, Math.min(8, (filterState.tahun - BASE_YEAR) * 2));
-
-      let html = `
-        <div class="grid-header-wrap">
-          <h2>Daftar Program</h2>
-          <span class="grid-target-info">Target tampil: ${filterState.tahun}</span>
-        </div>
-        <div class="cards-grid">
-      `;
-
-      data.forEach(item => {
-        const key = bidangKey(item.bidang);
-        html += buildCard(item, `bidang-${key}`, filterState.tahun, yrOff);
-      });
-
-      html += `</div>`;
-      container.innerHTML = html;
-    }
-
-    // ============================================================
-    // FILTER & STATS
-    // ============================================================
-    function applyFilter() {
-      let filtered = allData;
-
-      if (filterState.level) {
-        filtered = filtered.filter(d => d.level === filterState.level);
-      }
-      if (filterState.prioritas) {
-        filtered = filtered.filter(d => String(d.priority) === filterState.prioritas);
-      }
-      if (filterState.bidang) {
-        filtered = filtered.filter(d => d.bidang === filterState.bidang);
-      }
-      if (filterState.payung) {
-        filtered = filtered.filter(d => d.programPayung === filterState.payung);
-      }
-      if (filterState.pic) {
-        filtered = filtered.filter(d => d.rasce.some(r => r.short === filterState.pic || r.label === filterState.pic));
-      }
-      if (filterState.sumber) {
-        filtered = filtered.filter(d => d.sumberGap && d.sumberGap.includes(filterState.sumber));
-      }
-      if (filterState.search) {
-        const s = filterState.search.toLowerCase();
-        filtered = filtered.filter(d =>
-          (d.program && d.program.toLowerCase().includes(s)) ||
-          (d.indikator && d.indikator.toLowerCase().includes(s)) ||
-          (d.gap && d.gap.toLowerCase().includes(s)) ||
-          (d.id && d.id.toLowerCase().includes(s))
-        );
-      }
-
-      document.getElementById("program-count").innerText = `${filtered.length} / ${allData.length} program`;
-      renderDashboard(filtered);
-    }
-
-    // ============================================================
-    // CACHE (localStorage, TTL 30 menit)
-    // ============================================================
-    function loadCache() {
-      try {
-        const c = JSON.parse(localStorage.getItem(CACHE_KEY));
-        if (c && Date.now() - c.ts < CACHE_TTL) return c.raw;
-      } catch (e) { }
-      return null;
-    }
-    function saveCache(raw) {
-      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), raw })); } catch (e) { }
-    }
-    function clearCache() { localStorage.removeItem(CACHE_KEY); }
-
-    // ============================================================
-    // HANDLE DATA (JSONP callback)
-    // ============================================================
-    function handleDataRenstra(payload) {
-      const old = document.getElementById("jsonp-script");
-      if (old) old.remove();
-
-      if (payload.error) {
-        document.getElementById("main-content").innerHTML =
-          `<div class="error-box">⚠️ Error dari API: ${esc(payload.error)}</div>`;
-        return;
-      }
-
-      const raw = payload.raw;
-      if (!raw || raw.length < 2) {
-        document.getElementById("main-content").innerHTML =
-          `<div class="empty-state"><div class="emoji">📭</div><p>Data kosong dari spreadsheet.</p></div>`;
-        return;
-      }
-
-      saveCache(raw);
-      processAndRender(raw);
-    }
-
-    function processAndRender(raw) {
-      allData = parseRawData(raw);
-
-      // Populate Lanjutan Dropdowns
-      const setBidang = new Set();
-      const setPayung = new Set();
-      const setPic = new Set();
-      const setSumber = new Set();
-
-      allData.forEach(d => {
-        if (d.bidang) setBidang.add(d.bidang);
-        if (d.programPayung) setPayung.add(d.programPayung);
-        if (d.sumberGap) {
-          d.sumberGap.split(/[,;]/).forEach(s => setSumber.add(s.trim()));
-        }
-        d.rasce.forEach(p => setPic.add(p.short));
-      });
-
-      const fillSelect = (id, set, def) => {
-        const el = document.getElementById(id);
-        el.innerHTML = `<option value="">${def}</option>`;
-        Array.from(set).filter(Boolean).sort().forEach(v => {
-          const opt = document.createElement("option");
-          opt.value = v;
-          opt.textContent = v.length > 55 ? v.substring(0, 55) + "…" : v;
-          el.appendChild(opt);
+        
+        // Jalankan fetch ulang setiap kali pilihan dropdown diubah
+        document.getElementById('bidang-selector').addEventListener('change', (e) => {
+            fetchDashboardData(e.target.value);
         });
-      };
 
-      fillSelect("filter-bidang", setBidang, "Semua Bidang");
-      fillSelect("filter-payung", setPayung, "Semua Program Payung");
-      fillSelect("filter-pic", setPic, "Semua PIC");
-      fillSelect("filter-sumber", setSumber, "Semua Sumber Gap");
-
-      // Initialize UI for chips
-      document.querySelectorAll('#filter-tahun .f-chip').forEach(btn => {
-        if (btn.dataset.val == filterState.tahun) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-
-      applyFilter();
-    }
-
-    // ============================================================
-    // FETCH DATA (Dual-Layer: Native Fetch API + JSONP Fallback)
-    // ============================================================
-    async function fetchData(forceRefresh = false) {
-      if (!forceRefresh) {
-        const cached = loadCache();
-        if (cached) {
-          console.log("[Renstra] Cache hit — menggunakan data tersimpan.");
-          processAndRender(cached);
-          return;
-        }
-      }
-
-      document.getElementById("main-content").innerHTML =
-        `<div class="loading-overlay"><div class="spinner"></div><span>Memuat data Renstra...</span></div>`;
-
-      // 1. Coba menggunakan Fetch API terlebih dahulu (lebih responsif & ramah mobile browser)
-      try {
-        const res = await fetch(`${GAS_URL}?_=${Date.now()}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.raw) {
-            handleDataRenstra(data);
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn("[Renstra] Fetch API gagal/terblokir, mencoba teknik JSONP...", err);
-      }
-
-      // 2. Fallback menggunakan Tag Script JSONP
-      const oldScript = document.getElementById("jsonp-script");
-      if (oldScript) oldScript.remove();
-
-      const script = document.createElement("script");
-      script.id = "jsonp-script";
-      script.src = `${GAS_URL}?callback=handleDataRenstra&_=${Date.now()}`;
-      script.onerror = () => {
-        document.getElementById("main-content").innerHTML =
-          `<div class="error-box">
-            <p>⚠️ Gagal menghubungi API (Koneksi terganggu / terblokir oleh pengaman mobile browser).</p>
-            <button onclick="clearCache(); fetchData(true);" class="f-chip active" style="margin-top:10px; cursor:pointer; padding:6px 14px;">🔄 Coba Lagi</button>
-          </div>`;
-      };
-      document.body.appendChild(script);
-    }
-
-    // ============================================================
-    // EVENT LISTENERS
-    // ============================================================
-    // Chips Listeners
-    function setupChips(containerId, stateKey) {
-      document.getElementById(containerId).addEventListener("click", e => {
-        if (e.target.classList.contains("f-chip")) {
-          // Update active class
-          document.querySelectorAll(`#${containerId} .f-chip`).forEach(b => b.classList.remove("active"));
-          e.target.classList.add("active");
-          // Update state and re-filter
-          filterState[stateKey] = e.target.dataset.val;
-          if (stateKey === 'tahun') filterState.tahun = parseInt(e.target.dataset.val);
-          applyFilter();
-        }
-      });
-    }
-
-    setupChips("filter-tahun", "tahun");
-    setupChips("filter-level", "level");
-    setupChips("filter-prioritas", "prioritas");
-
-    // Search Box Listener
-    const searchInput = document.getElementById("filter-search");
-    let searchTimeout;
-    searchInput.addEventListener("input", e => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        filterState.search = e.target.value;
-        applyFilter();
-      }, 300);
-    });
-
-    // Toggle Lanjutan
-    const btnLanjutan = document.getElementById("btn-lanjutan");
-    const panelLanjutan = document.getElementById("filter-lanjutan-panel");
-    btnLanjutan.addEventListener("click", () => {
-      panelLanjutan.classList.toggle("open");
-      if (panelLanjutan.classList.contains("open")) {
-        btnLanjutan.innerHTML = "Filter Lanjutan ▲";
-      } else {
-        btnLanjutan.innerHTML = "Filter Lanjutan ▼";
-      }
-    });
-
-    // Dropdowns Listeners
-    document.getElementById("filter-bidang").addEventListener("change", e => { filterState.bidang = e.target.value; applyFilter(); });
-    document.getElementById("filter-payung").addEventListener("change", e => { filterState.payung = e.target.value; applyFilter(); });
-    document.getElementById("filter-pic").addEventListener("change", e => { filterState.pic = e.target.value; applyFilter(); });
-    document.getElementById("filter-sumber").addEventListener("change", e => { filterState.sumber = e.target.value; applyFilter(); });
-
-    // Refresh Data Button
-    const btnRefresh = document.getElementById("btn-refresh-data");
-    if (btnRefresh) {
-      btnRefresh.addEventListener("click", () => {
-        btnRefresh.style.transform = "rotate(360deg)";
-        btnRefresh.style.transition = "transform 0.5s ease";
-        clearCache();
-        fetchData(true);
-        setTimeout(() => { btnRefresh.style.transform = ""; btnRefresh.style.transition = ""; }, 500);
-      });
-    }
-
-    // Double click header to clear cache
-    document.querySelector(".header-title").addEventListener("dblclick", () => {
-      clearCache();
-      fetchData(true);
-    });
-
-
-
-    // ============================================================
-    // INIT
-    // ============================================================
-    fetchData();
-  </script>
+        // Tampilkan data pertama kali secara otomatis (sesuai opsi default pertama: keuangan)
+        fetchDashboardData(document.getElementById('bidang-selector').value);
+    </script>
 </body>
-
 </html>
