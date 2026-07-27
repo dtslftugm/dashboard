@@ -415,7 +415,7 @@
         if (active) {
           const isScheduled = isTruthy(jadwalQ[i]);
           const cls = isScheduled ? "realized" : "realized-check";
-          const titleText = `Realisasi ${lbl}: ${esc(val.toFixed(3))}`;
+          const titleText = `Realisasi ${lbl}: ${esc(val.toLocaleString('id-ID', { minimumFractionDigits: 3, maximumFractionDigits: 3 }))}`;
           return `<span class="q-chip ${cls}" title="${titleText}">${esc(text)}</span>`;
         }
         return `<span class="q-chip" title="Belum terealisasi">${esc(text)}</span>`;
