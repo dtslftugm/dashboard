@@ -366,7 +366,6 @@ function formatQChipLabel(lbl, val) {
   // Jika val adalah angka valid, format ke standar Indonesia (3 digit desimal)
   if (!isNaN(num)) {
     const formattedNum = num.toLocaleString('id-ID', {
-      minimumFractionDigits: 3,
       maximumFractionDigits: 3
     });
     return `${lbl}: ${formattedNum}`;
