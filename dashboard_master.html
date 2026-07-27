@@ -126,7 +126,7 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzAt7zgfu2Vcob2udooj6aiXQqyfJF-vC3CfpI1e9u-A3dTEus0K0Vx3_q2eGch6qcR/exec";
     const CACHE_KEY = "renstra_raw_v3";
     const CACHE_TTL = 30 * 60 * 1000; // 30 menit
-    const BASE_YEAR = 2026;
+    const BASE_YEAR = 2025;
 
     // Label PIC (singkat) untuk chip RASCE
     const PIC_LABELS = [
@@ -309,10 +309,7 @@
         if (totalJ <= 0) return null;
         const pNums = pSlice.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 0);
         const totalP = pNums.reduce((a, b) => a + b, 0);
-        //        return Math.min(100, Math.round((totalP / totalJ) * 100));
-        const persenPJ = (totalP / totalJ) * 100;
-        const persenBulat = Math.round(persenPJ * 1000) / 1000;
-        return Math.min(100, persenBulat)
+        return Math.min(100, Math.round((totalP / totalJ) * 100));
       }
 
       // Fallback: hitung slot boolean (TRUE/v/✓)
