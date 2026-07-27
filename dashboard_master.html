@@ -413,7 +413,7 @@
         const active = isTruthy(val);
         //Format angka ke Lokal ID 3 desimal
         const numVal = Number(val);
-        const valFormatted = !isNaN(numVal) && active ? numVal.toLocaleString('id-ID, { minimumFractionDigits: 3, maximumFractionDigits: 3}) : val;
+        const valFormatted = !isNaN(numVal) && active ? numVal.toLocaleString('id-ID', { minimumFractionDigits: 3, maximumFractionDigits: 3}) : val;
         const text = formatQChipLabel(lbl, valFormatted);
         if (active) {
           const isScheduled = isTruthy(jadwalQ[i]);
