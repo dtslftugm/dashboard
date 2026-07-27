@@ -427,12 +427,11 @@ function formatQChipLabel(lbl, val) {
         const active = isTruthy(val);
         //Format angka ke Lokal ID 3 desimal
         const numVal = Number(val);
-        const valFormatted = !isNaN(numVal) && active ? numVal.toLocaleString('id-ID', { minimumFractionDigits: 3, maximumFractionDigits: 3}) : val;
-        const text = formatQChipLabel(lbl, valFormatted);
+        const text = formatQChipLabel(lbl, numVal);
         if (active) {
           const isScheduled = isTruthy(jadwalQ[i]);
           const cls = isScheduled ? "realized" : "realized-check";
-          const titleText = `Realisasi ${lbl}: ${esc(val.toLocaleString('id-ID', { minimumFractionDigits: 3, maximumFractionDigits: 3 }))}`;
+          const titleText = `Realisasi ${lbl}: ${esc(val)}`;
           return `<span class="q-chip ${cls}" title="${titleText}">${esc(text)}</span>`;
         }
         return `<span class="q-chip" title="Belum terealisasi">${esc(text)}</span>`;
