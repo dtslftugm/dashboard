@@ -309,7 +309,10 @@
         if (totalJ <= 0) return null;
         const pNums = pSlice.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 0);
         const totalP = pNums.reduce((a, b) => a + b, 0);
-        return Math.min(100, Math.round((totalP / totalJ) * 100));
+        //        return Math.min(100, Math.round((totalP / totalJ) * 100));
+        const persenPJ = (totalP / totalJ) * 100;
+        const persenBulat = Math.round(persenPJ * 1000) / 1000;
+        return Math.min(100, persenBulat)
       }
 
       // Fallback: hitung slot boolean (TRUE/v/✓)
