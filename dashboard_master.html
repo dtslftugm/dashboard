@@ -350,16 +350,31 @@
 
     function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-    function formatQChipLabel(lbl, val) {
-      if (val === null || val === undefined || val === "" || val === false || val === "FALSE" || val === 0 || val === "0") {
-        return lbl;
-      }
-      const str = String(val).trim();
-      if (str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
-        return lbl;
-      }
-      return `${lbl}: ${str}`;
-    }
+function formatQChipLabel(lbl, val) {
+  if (val === null || val === undefined || val === "" || val === false || val === "FALSE" || val === 0 || val === "0") {
+    return lbl;
+  }
+  const str = String(val).trim();
+  if (str.toUpperCase() === "TRUE" || str.toLowerCase() === "v" || str === "✓") {
+    return lbl;
+  }
+
+  // --- TAMBAHAN FORMAT DESIMAL ---
+  // Coba ubah ke tipe angka
+  const num = Number(val);
+  
+  // Jika val adalah angka valid, format ke standar Indonesia (3 digit desimal)
+  if (!isNaN(num)) {
+    const formattedNum = num.toLocaleString('id-ID', {
+      minimumFractionDigits: 3,
+      maximumFractionDigits: 3
+    });
+    return `${lbl}: ${formattedNum}`;
+  }
+
+  // Jika bukan angka (misal teks biasa), kembalikan seperti semula
+  return `${lbl}: ${str}`;
+}
 
     // ============================================================
     // CARD HTML BUILDER
