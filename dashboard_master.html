@@ -409,13 +409,13 @@
       }).join("");
 
       const realChips = semLabels.map((lbl, i) => {
-        const val = realQ[i].toFixed(3);
+        const val = realQ[i];
         const active = isTruthy(val);
         const text = formatQChipLabel(lbl, val);
         if (active) {
           const isScheduled = isTruthy(jadwalQ[i]);
           const cls = isScheduled ? "realized" : "realized-check";
-          const titleText = `Realisasi ${lbl}: ${esc(val)}`;
+          const titleText = `Realisasi ${lbl}: ${esc(val.toFixed(3))}`;
           return `<span class="q-chip ${cls}" title="${titleText}">${esc(text)}</span>`;
         }
         return `<span class="q-chip" title="Belum terealisasi">${esc(text)}</span>`;
