@@ -236,7 +236,7 @@
       const pelaksanaan = [];
       for (let y = 0; y < 5; y++) {
         for (let s of semList) {
-          const v = g(`Pelaksanaan ${BASE_YEAR + y} ${s}`) ?? g(`Pelaksanaan  ${BASE_YEAR + y} ${s}`);
+          const v = g(`Pelaksanaan ${BASE_YEAR + y} ${s}`);
           pelaksanaan.push(v !== null ? v : null);
         }
       }
@@ -409,7 +409,7 @@
       }).join("");
 
       const realChips = semLabels.map((lbl, i) => {
-        const val = realQ[i];
+        const val = realQ[i].toFixed(3);
         const active = isTruthy(val);
         const text = formatQChipLabel(lbl, val);
         if (active) {
